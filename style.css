@@ -1,1 +1,40 @@
-/* add your CSS here */
+.row {
+    display:flex;
+    position:sticky;
+    top: 0;
+    color:aliceblue;
+    background-color: #212a31;
+    height: 50px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-element {
+    width: 20%;
+    padding: 20px;
+}
+
+#logo {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid blue;
+}
+
+#main {
+    background-color: #d3d9d4;
+    height: 700px;
+}
+
+#footer {
+    display:flex;
+    color: aliceblue;
+    background-color: #212a31;    
+}
+
+.footer-element {
+ padding: 10px;
+ width: 33.33%;
+}
