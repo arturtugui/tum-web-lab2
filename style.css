@@ -1,10 +1,15 @@
-.row {
+body {
+        font-family: Arial;
+      }
+
+#nav {
     display:flex;
-    position:sticky;
+    position:fixed;
     top: 0;
     color:aliceblue;
     background-color: #212a31;
     height: 50px;
+    width: 100%;
 }
 
 a {
@@ -18,14 +23,16 @@ a {
 }
 
 #logo {
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid blue;
+    font-family:Verdana;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 15px;
 }
 
-#main {
+#body {
     background-color: #d3d9d4;
     height: 700px;
+    margin-top: 50px;
 }
 
 #footer {
@@ -37,4 +44,11 @@ a {
 .footer-element {
  padding: 10px;
  width: 33.33%;
+}
+
+.footer-heading {
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 15px;
+    
 }
