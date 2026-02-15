@@ -4,6 +4,17 @@ body {
     font-size: 1rem;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 /* header */
 #nav {
@@ -37,8 +48,11 @@ a {
 
 #sections {
     font-family: Arial;
-    background-color: #d3d9d4;
+    background-color: #d3d8d9;
     margin-top: 3.125rem; /* 50px */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* section 1 : hero */
@@ -55,8 +69,8 @@ a {
     top: 9.375rem; /* 150px */
     left: 5%;
     color: white;
-    font-size: 1.875rem; /* 30px */
-    width: 60%;
+    font-size: 2.5rem; /* 30px */
+    width: 80%;
     z-index: 2;
 }
 
@@ -134,9 +148,112 @@ a {
 
 
 
+/* section 3 : kitchens */
+#kitchens-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+    background-color: #212a31;
+    color:aliceblue;
+    padding: 2rem 1rem;
+    position: relative;
+}
 
+#kitchen-text {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.kitchens-heading {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
 
+.kitchens-description {
+    font-size: 1rem;
+    color: #838c90;
+}
+
+#kitchen-button {
+    width: auto; /* Let the button size to its content */
+    min-width: 10rem;
+    max-width: 15rem;
+    align-self: center;
+    padding: 0.625rem 1.5rem; /* 10px 20px */
+    border-radius: 0.75rem;
+    background-color: #324a5f; /* Slightly different from hero for contrast */
+    color: white;
+    font-size: 1.25rem; /* 20px */
+    border: none;
+    cursor: pointer;
+    margin-top: 1.5rem; /* Add space above if needed */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+#kitchens-container {
+    flex: 1 1 66.66%;
+    max-width: 66.66%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.kitchen-image {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    object-fit: cover;
+}
+
+/* section 4 : furniture */
+#furniture-section {
+    color: aliceblue;
+    background-color: #748d92;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.furniture-heading {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+#furniture-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 1rem;
+}
+
+.furniture-image {
+    width: 100%;
+    height: 180px;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    object-fit: cover;
+    background: #fff;
+}
+
+#furniture-section .section-heading {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* footer */
 
 #footer {
     display: flex;
@@ -144,9 +261,8 @@ a {
     background-color: #212a31;
 }
 
-/* footer */
 #footer {
-    margin-top: 62.5rem; /* 1000px */
+    margin-top: 0;
 }
 
 .footer-element {
