@@ -154,7 +154,7 @@ a {
     flex-direction: row;
     align-items: flex-start;
     gap: 2rem;
-    background-color: #212a31;
+    background-color: #1e2c36;
     color:aliceblue;
     padding: 2rem 1rem;
     position: relative;
@@ -216,7 +216,7 @@ a {
 /* section 4 : furniture */
 #furniture-section {
     color: aliceblue;
-    background-color: #748d92;
+    background-color: #324946;
     padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
@@ -281,7 +281,7 @@ a {
 .footer-heading {
     font-size: 1.25rem; /* 20px */
     font-weight: bold;
-    padding-bottom: 0.75rem; /* 15px */
+    padding-bottom: 0rem; /* 15px */
 }
 
 .footer-element {

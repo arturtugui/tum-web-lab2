@@ -1,24 +1,25 @@
 # Lab 2 - Landing page
 
-Create a web page for your/friends/relatives business (example: car-rent, cookies-shop, crypto-scam)
+This repository contains a simple landing page for a furniture and kitchens business "MOLDOVA", located in mun. Orhei at str. Mihai Eminescu 21. The page showcases services (living/dormitory furniture, custom kitchens, windows/doors), gallery images, and contact information including an embedded map.
 
-> For a maximal grade, the website should be for a real client (your/friends/relatives business), otherwise -1-2 points
+## Screenshots
 
-## Customer requirements
+### Header and hero section
 
-- Some form of navigation to sections (links, buttons)
-- Call to action
-- At least 4 sections ([see examples](https://webflow.com/blog/high-converting-landing-page))
-- Pleasant to the eyes
+<img src="./report-images/hero.png">
 
-## Dev requirements
+### Services section
 
-- Use vanilla CSS and HTML (no frameworks)
-- Have a decent git history (no one commit)
-- The page should be deployed on a free hosting service (example: GitHub Pages, Vercel, Netlify)
-- Project repo should have a README with a short description of the landing page topic, screenshots, and a link to the live demo
+<img src="./report-images/services.png">
 
-## Other requirements:
+### Kitchens sections
 
-- For potential maximal mark, a WIP version should be submitted during the class
-- Use index.html, reset.css
+<img src="./report-images/kitchens.png">
+
+### Living/dormitory furniture section
+
+<img src="./report-images/living.png">
+
+## Live demo
+
+- Live demo: https://arturtugui.github.io/tum-web-lab2/
