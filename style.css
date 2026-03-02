@@ -1,29 +1,46 @@
-/* General styles */
-body {
-    font-family: Arial;
-    font-size: 1rem;
+/* Specfiy default font size */
+/* Mobile */
+:root {
+  font-size: 14px;  /* Smaller on mobile: 1rem = 14px */
+  
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  :root {
+    font-size: 16px;  /* Normal size: 1rem = 16px */
+  }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  :root {
+    font-size: 18px;  /* Larger on desktop: 1rem = 18px */
+  }
 }
 
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    font-family: Arial;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* header */
 #nav {
     display: flex;
     position: fixed;
+    align-items: center;
     top: 0;
     color: aliceblue;
     background-color: #212a31;
-    height: 3.125rem; /* 50px */
+    height: 3.125rem;
     width: 100%;
     z-index: 1000;
 }
@@ -34,55 +51,92 @@ a {
 }
 
 .nav-element {
-    width: 20%;
-    padding: 1.25rem; /* 20px */
+    width: 25%;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+/* Mobile: hide Services link */
+.nav-element:first-of-type {
+  display: none;
+}
+
+/* Tablet and up: show it (block is fine in a flex container) */
+@media (min-width: 768px) {
+  .nav-element:first-of-type {
+    display: block;
+  }
 }
 
 #logo {
     font-family: Verdana;
     font-weight: bold;
-    font-size: 1.25rem; /* 20px */
-    padding: 0.9375rem; /* 15px */
+    font-size: 1.25rem;
+    padding: 0.9375rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+#logo h1 {
+    margin: 0;
+    padding: 0;
 }
 
 
 #sections {
     font-family: Arial;
     background-color: #d3d8d9;
-    margin-top: 3.125rem; /* 50px */
+    margin-top: 3.125rem;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
 /* section 1 : hero */
+/* section 1 : hero */
 #hero-section {
     position: relative;
-    background-image: url("./images/hero-image.jpg"); /* Using a placeholder image */
+    background-image: url("./images/hero-image.jpg");
     background-size: cover;
     background-position: center;
-    height: 25rem; /* 400px */
+    height: 25rem;
 }
 
 #hero-text {
     position: absolute;
-    top: 9.375rem; /* 150px */
+    top: 30%;
     left: 5%;
     color: white;
-    font-size: 2.5rem; /* 30px */
-    width: 80%;
+    font-size: 2rem;
     z-index: 2;
+}
+
+
+/* Tablet and up: hide 2nd <br> (displays as 2 lines) */
+@media (min-width: 768px) {
+  #hero-text h2 br:nth-of-type(2) {
+    display: none;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  #hero-text {
+    font-size: 2.5rem;
+  }
 }
 
 #hero-button {
     position: absolute;
-    top: 18.75rem; /* 300px */
+    top: 18.75rem;
     left: 15%;
-    padding: 0.625rem 1.25rem; /* 10px 20px */
+    padding: 0.625rem 1.25rem;
     border-radius: 0.75rem;
     background-color: #124e66;
     color: white;
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
     border: none;
     cursor: pointer;
     z-index: 2;
@@ -104,15 +158,16 @@ a {
 }
 
 .section-heading {
-  font-size: 1.875rem; /* 30px */
+  font-size: 1.875rem;
   font-weight: bold;
   text-align: center;
   margin-top: 2rem;
 }
 
+/* Mobile: 1 column */
 #services-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr;
   gap: 2rem;
   align-items: stretch;
   margin-top: 1.5rem;
@@ -120,6 +175,20 @@ a {
   margin-left: 1rem;
   margin-right: 1rem;
   padding-bottom: 1rem;
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) {
+  #services-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: 4 columns */
+@media (min-width: 1200px) {
+  #services-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .service-el {
@@ -146,62 +215,88 @@ a {
   flex-grow: 1;
 }
 
-
+.service-divider {
+  width: 10%;
+  border: none;
+  border-top: 1px solid #124e66;
+  margin: 0.5rem 0;
+}
 
 /* section 3 : kitchens */
+
+/* Mobile: stack vertically */
 #kitchens-section {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: stretch;
     gap: 2rem;
     background-color: #1e2c36;
-    color:aliceblue;
+    color: aliceblue;
     padding: 2rem 1rem;
     position: relative;
 }
 
-#kitchen-text {
-    flex: 0 0 33.33%;
-    max-width: 33.33%;
-    min-width: 250px;
+#kitchen-container-1 {
+    flex: 1 1 auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 1rem;
+}
+
+#kitchen-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#kitchen-info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     align-items: center;
 }
 
 .kitchens-heading {
     font-size: 1.875rem;
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+    flex: 0.5;
 }
 
 .kitchens-description {
     font-size: 1rem;
     color: #838c90;
+    margin-bottom: 0;
+    flex: 1;
 }
 
 #kitchen-button {
-    width: auto; /* Let the button size to its content */
+    width: auto;
     min-width: 10rem;
     max-width: 15rem;
-    align-self: center;
-    padding: 0.625rem 1.5rem; /* 10px 20px */
+    padding: 0.625rem 1.5rem;
     border-radius: 0.75rem;
-    background-color: #324a5f; /* Slightly different from hero for contrast */
+    background-color: #324a5f;
     color: white;
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
     border: none;
     cursor: pointer;
-    margin-top: 3rem; /* Add space above if needed */
+    margin-top: 0;
+    margin-bottom: 0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    flex-shrink: 0;
+    white-space: nowrap;
+    align-self: center;
 }
 
-#kitchens-container {
-    flex: 1 1 66.66%;
-    max-width: 66.66%;
+#kitchens-container-2 {
+    flex: 1 1 auto;
+    max-width: 100%;
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 1rem;
 }
 
@@ -211,6 +306,77 @@ a {
     border-radius: 0.5rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     object-fit: cover;
+}
+
+#kitchen-image-5 {
+    display: none;
+}
+
+
+/* Tablet and up: text+images side-by-side (33.33/66.66) */
+@media (min-width: 768px) {
+    #kitchens-section {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    #kitchen-container-1 {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #kitchen-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-shrink: 0;
+    }
+    
+    #kitchen-text {
+        gap: 0.5rem;
+    }
+    
+    .kitchens-heading {
+        margin-bottom: 0;
+    }
+    
+    .kitchens-description {
+        margin-bottom: 0;
+    }
+    
+    #kitchen-button {
+        margin-top: 0;
+        margin-bottom: 0;
+        align-self: center;
+    }
+    
+    #kitchens-container-2 {
+        flex: 1 1 66.66%;
+        max-width: 66.66%;
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #kitchen-image-5 {
+        display: none;
+        
+    }
+}
+
+/* Desktop only: show 5th image */
+@media (min-width: 1200px) {
+    #kitchen-image-5 {
+        display: block;
+        flex: 1;
+        margin-top: auto;
+    }
+
+    #kitchen-button {
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
 }
 
 /* section 4 : furniture */
@@ -229,23 +395,78 @@ a {
     margin-bottom: 1rem;
 }
 
+/* Mobile: 1 column */
 #furniture-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     gap: 1rem;
+    grid-template-columns: repeat(1, 1fr);
     width: 100%;
     max-width: 1200px;
     margin-top: 1rem;
 }
 
+/* Tablet: 2 columns */
+@media (min-width: 768px) {
+    #furniture-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+    
+    #furniture-button-wrapper {
+        display: none !important;
+    }
+}
+
+/* Desktop: 3 columns */
+@media (min-width: 1200px) {
+    #furniture-container {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+}
+
 .furniture-image {
     width: 100%;
-    height: 180px;
+    height: auto;
     border-radius: 0.5rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     object-fit: cover;
     background: #fff;
+}
+
+#furniture-button-wrapper {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+#furniture-text {
+    flex: 1;
+    font-size: 1.25rem;
+    color: aliceblue;
+    text-align: center;
+    font-weight: bold;
+}
+
+#furniture-button {
+    width: auto;
+    min-width: 10rem;
+    max-width: 15rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.75rem;
+    background-color: #324a5f;
+    color: white;
+    font-size: 1.25rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: block;
+    align-self: center;
+    flex: 1;
 }
 
 #furniture-section .section-heading {
@@ -255,7 +476,15 @@ a {
 
 /* footer */
 
+
 #footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: aliceblue;
+    background-color: #212a31;
+    padding: 2rem 1rem;
+    gap: 2rem;
+    margin-top: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     color: aliceblue;
@@ -276,12 +505,23 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .footer-heading {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
     font-weight: bold;
-    padding-bottom: 0rem; /* 15px */
+    padding-bottom: 0rem;
 }
 
 .footer-element {
@@ -295,7 +535,7 @@ a {
     margin-left: 0.5rem;
 }
 
-iframe {
+.map-iframe {
     width: 100%;
     height: 200px;
     border: 0;

@@ -1,0 +1,27 @@
+{
+  "name": "tum-web-lab2",
+  "version": "1.0.0",
+  "description": "This repository contains a simple landing page for a furniture and kitchens business \"MOLDOVA\", located in mun. Orhei at str. Mihai Eminescu 21. The page showcases services (living/dormitory furniture, custom kitchens, windows/doors), gallery images, and contact information including an embedded map.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tailwindcss -i ./input.css -o ./dist/output.css",
+    "watch": "tailwindcss -i ./input.css -o ./dist/output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arturtugui/tum-web-lab2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arturtugui/tum-web-lab2/issues"
+  },
+  "homepage": "https://github.com/arturtugui/tum-web-lab2#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19"
+  }
+}
