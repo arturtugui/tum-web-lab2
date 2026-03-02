@@ -1,24 +1,24 @@
-# Lab 2 - Landing page
+# Lab 3 - Responsive Design & Animations
 
-This repository contains a simple landing page for a furniture and kitchens business "MOLDOVA", located in mun. Orhei at str. Mihai Eminescu 21. The page showcases services (living/dormitory furniture, custom kitchens, windows/doors), gallery images, and contact information including an embedded map.
+// short description of the lab
 
-## Screenshots
+## Responsive design showcase
 
-### Header and hero section
+### Kitchens section and navbar on desktop
 
-<img src="./report-images/hero.png">
+![alt text](report-images/kitchens-desktop.png)
 
-### Services section
+### Kitchens section on tablet
 
-<img src="./report-images/services.png">
+![alt text](report-images/kitchens-tablet.png)
 
-### Kitchens sections
+### Kitchens section and navbar on mobile
 
-<img src="./report-images/kitchens.png">
+![alt text](report-images/kitchens-mobile.png)
 
-### Living/dormitory furniture section
+## Mascot showcase
 
-<img src="./report-images/living.png">
+![alt text](report-images/mascot.png)
 
 ## Live demo
 
