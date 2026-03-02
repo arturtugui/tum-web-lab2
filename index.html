@@ -41,6 +41,11 @@
 
       <div id = "mascot">
       </div>
+
+      <div id="speech-balloon">
+        <p>Ai intrebări?</p>
+        <button id="contact-button">Contactează-ne</button>
+      </div>
     
     <div id = "sections">
       <div id = "hero-section">
@@ -193,4 +198,11 @@
       </div>
     </div>
   </body>
+
+  <script>
+    const mascot = document.getElementById('mascot');
+    mascot.addEventListener('animationend', () => {
+        mascot.classList.add('mascot-done');
+    });
+  </script>
 </html>
