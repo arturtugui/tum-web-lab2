@@ -41,28 +41,25 @@
      WHY HERE: Uses background-image: url() which can't be a utility,
      plus animation references and state-based image switching. */
   #mascot {
-    @apply fixed bottom-8 right-8 w-[100px] h-[100px] cursor-pointer z-[100] opacity-0;
+    @apply fixed bottom-8 right-8 w-[100px] h-[100px] cursor-pointer z-[100];
     background-image: url("../images/mascot-frames/sleep.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    animation: mascotEntrance 2s ease-out 2s forwards;
+    opacity: 0; /* invisible before & during delay */
+    animation: mascotEntrance 2s ease-out 2s both; /* 'both' applies first keyframe during delay */
   }
 
-  #mascot.mascot-done {
-    @apply opacity-100;
+  /* After animation ends, JS adds this class */
+  #mascot.ready {
     animation: none;
+    opacity: 1;
+    background-image: url("../images/mascot-frames/sleep.png");
+    transition: background-image 0.1s;
   }
 
-  #mascot:hover {
-    background-image: url("../images/mascot-frames/active.png") !important;
-    transition: background-image 0.4s ease-in-out;
-    animation: none !important;
-  }
-
-  #mascot.mascot-done:hover {
-    background-image: url("./images/mascot-frames/active.png") !important;
-    @apply opacity-100;
+  #mascot.ready:hover {
+    background-image: url("../images/mascot-frames/active.png");
   }
 
   /* --------------- SPEECH BALLOON ---------------
