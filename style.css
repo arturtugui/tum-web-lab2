@@ -287,6 +287,7 @@ a {
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     flex-shrink: 0;
     white-space: nowrap;
+    align-self: center;
 }
 
 #kitchens-container-2 {
@@ -347,6 +348,7 @@ a {
     #kitchen-button {
         margin-top: 0;
         margin-bottom: 0;
+        align-self: center;
     }
     
     #kitchens-container-2 {
@@ -368,6 +370,11 @@ a {
         display: block;
         flex: 1;
         margin-top: auto;
+    }
+
+    #kitchen-button {
+        margin-top: 10%;
+        margin-bottom: 10%;
     }
 }
 
@@ -403,9 +410,13 @@ a {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, 1fr);
     }
+    
+    #furniture-button-wrapper {
+        display: none !important;
+    }
 }
 
-/* Desktop: 4 columns */
+/* Desktop: 3 columns */
 @media (min-width: 1200px) {
     #furniture-container {
         grid-template-columns: repeat(3, 1fr);
@@ -420,6 +431,41 @@ a {
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     object-fit: cover;
     background: #fff;
+}
+
+#furniture-button-wrapper {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+#furniture-text {
+    flex: 1;
+    font-size: 1.25rem;
+    color: aliceblue;
+    text-align: center;
+    font-weight: bold;
+}
+
+#furniture-button {
+    width: auto;
+    min-width: 10rem;
+    max-width: 15rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.75rem;
+    background-color: #324a5f;
+    color: white;
+    font-size: 1.25rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: block;
+    align-self: center;
+    flex: 1;
 }
 
 #furniture-section .section-heading {
