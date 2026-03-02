@@ -1,3 +1,229 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =====================================================================
+   @layer base — Global styles that affect bare HTML elements.
+   WHY HERE: :root font-size responsive scaling can't be done per-element
+   with utilities because it targets the document root itself.
+   ===================================================================== */
+@layer base {
+  /* Responsive root font-size: makes ALL rem-based sizes scale.
+     14px mobile → 16px tablet → 18px desktop.
+     This is a global scaling trick — no Tailwind utility equivalent. */
+  :root {
+    font-size: 14px;
+  }
+  @media (min-width: 768px) {
+    :root {
+      font-size: 16px;
+    }
+  }
+  @media (min-width: 1200px) {
+    :root {
+      font-size: 18px;
+    }
+  }
+}
+
+/* =====================================================================
+   @layer components — Complex components that CANNOT be expressed
+   purely with Tailwind utility classes. Reasons:
+   - ::before / ::after pseudo-elements (speech balloon arrow)
+   - background-image URL switching (mascot frames)
+   - Sibling selectors (#mascot:hover + #speech-balloon)
+   - Complex grid-area assignments (kitchens layout)
+   - @keyframes animation references
+   ===================================================================== */
+@layer components {
+
+  /* --------------- MASCOT CHARACTER ---------------
+     WHY HERE: Uses background-image: url() which can't be a utility,
+     plus animation references and state-based image switching. */
+  #mascot {
+    @apply fixed bottom-8 right-8 w-[100px] h-[100px] cursor-pointer z-[100];
+    background-image: url("../images/mascot-frames/sleep.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0; /* invisible before & during delay */
+    animation: mascotEntrance 2s ease-out 2s both; /* 'both' applies first keyframe during delay */
+  }
+
+  /* After animation ends, JS adds this class */
+  #mascot.ready {
+    animation: none;
+    opacity: 1;
+    background-image: url("../images/mascot-frames/sleep.png");
+    transition: background-image 0.1s;
+  }
+
+  #mascot.ready:hover {
+    background-image: url("../images/mascot-frames/active.png");
+  }
+
+  /* --------------- SPEECH BALLOON ---------------
+     WHY HERE: Uses ::before/::after for the arrow pointer,
+     plus the sibling selector (#mascot:hover + #speech-balloon). */
+  #speech-balloon {
+    @apply fixed bottom-36 right-16 bg-white border-2 border-vivid-blue rounded-2xl p-6 w-56 z-[99] hidden flex-col gap-4;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: balloonAppear 0.5s ease-in-out forwards;
+  }
+
+/* Speech balloon responsive positioning using theme breakpoints */
+  @media (min-width: theme('screens.md')) {
+    #speech-balloon {
+      @apply bottom-32;
+    }
+  }
+
+  @media (min-width: theme('screens.desktop')) {
+    #speech-balloon {
+      bottom: 7.5rem;
+    }
+  }
+
+  /* Arrow pointer — requires ::after/::before pseudo-elements
+     (no Tailwind utility for pseudo-element border-triangle trick) */
+  #speech-balloon::after {
+    content: '';
+    @apply absolute w-0 h-0;
+    bottom: -10px;
+    right: 20px;
+    border-left: 10px solid transparent;
+    border-right: 0 solid transparent;
+    border-top: 10px solid white;
+  }
+
+  #speech-balloon::before {
+    content: '';
+    @apply absolute w-0 h-0;
+    bottom: -14px;
+    right: 18px;
+    border-left: 12px solid transparent;
+    border-right: 0 solid transparent;
+    border-top: 12px solid #124e66;
+  }
+
+  /* Show balloon on hover — requires sibling selector (+),
+     which Tailwind utilities cannot express */
+  #mascot:hover + #speech-balloon,
+  #speech-balloon:hover {
+    @apply flex;
+  }
+
+  /* --------------- KITCHEN GRID AREAS ---------------
+     WHY HERE: Complex grid-area spans (e.g., "1 / 2 / 4 / 3")
+     change at 3 breakpoints. Tailwind has col-start/row-start
+     utilities but they don't support multi-cell spanning cleanly. */
+  #kitchens-section {
+    grid-template-areas:
+      'kitchen-heading'
+      'kitchen-description'
+      'kitchen-button'
+      'kitchen-image-1'
+      'kitchen-image-2'
+      'kitchen-image-3'
+      'kitchen-image-4'
+      'kitchen-image-5';
+  }
+
+  .kitchens-heading { grid-area: kitchen-heading; }
+  .kitchens-description { grid-area: kitchen-description; }
+  #kitchen-button { grid-area: kitchen-button; }
+  #kitchen-image-1 { grid-area: kitchen-image-1; }
+  #kitchen-image-2 { grid-area: kitchen-image-2; }
+  #kitchen-image-3 { grid-area: kitchen-image-3; }
+  #kitchen-image-4 { grid-area: kitchen-image-4; }
+  #kitchen-image-5 { grid-area: kitchen-image-5; }
+
+  @media (max-width: calc(theme('screens.md') - 1px)) {
+    #kitchen-image-5 {
+      @apply hidden;
+    }
+  }
+
+  /* Tablet: 3-column layout with text in col 1, images in 2x2 grid */
+  @media (min-width: theme('screens.md')) {
+    #kitchens-section {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas: none;
+    }
+    .kitchens-heading { grid-area: 1 / 1 / 3 / 2; }
+    .kitchens-description { grid-area: 3 / 1 / 5 / 2; }
+    #kitchen-button {
+      grid-area: 5 / 1 / 7 / 2;
+      @apply absolute bottom-1/2;
+    }
+    #kitchen-image-1 { grid-area: 1 / 2 / 4 / 3; }
+    #kitchen-image-2 { grid-area: 1 / 3 / 4 / 4; }
+    #kitchen-image-3 { grid-area: 4 / 2 / 7 / 3; }
+    #kitchen-image-4 { grid-area: 4 / 3 / 7 / 4; }
+    #kitchen-image-5 { @apply hidden; }
+  }
+
+  /* Desktop: 5th image visible in column 1 below the button */
+  @media (min-width: theme('screens.desktop')) {
+    #kitchens-section {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .kitchens-heading { grid-area: 1 / 1 / 2 / 2; }
+    .kitchens-description { grid-area: 2 / 1 / 3 / 2; }
+    #kitchen-button {
+      grid-area: 3 / 1 / 4 / 2;
+      @apply static;
+    }
+    #kitchen-image-5 {
+      @apply block;
+      grid-area: 4 / 1 / 7 / 2;
+    }
+    #kitchen-image-1 { grid-area: 1 / 2 / 4 / 3; }
+    #kitchen-image-2 { grid-area: 1 / 3 / 4 / 4; }
+    #kitchen-image-3 { grid-area: 4 / 2 / 7 / 3; }
+    #kitchen-image-4 { grid-area: 4 / 3 / 7 / 4; }
+  }
+}
+
+/* =====================================================================
+   KEYFRAME ANIMATIONS — Must be OUTSIDE @layer to be globally available.
+   Tailwind v3 purges content inside @layer if not referenced by utilities.
+   ===================================================================== */
+@keyframes mascotEntrance {
+  0% {
+    transform: translateX(-300px) scale(1.1);
+    background-image: url("../images/mascot-frames/slide-into.png");
+    opacity: 0;
+  }
+  20% {
+    transform: translateX(-215px) scale(1.1);
+    background-image: url("../images/mascot-frames/slide-into.png");
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(-75px) scale(1.1);
+    background-image: url("../images/mascot-frames/slide-into.png");
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-10px) scale(0.9);
+    background-image: url("../images/mascot-frames/sliding-momentum.png");
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    background-image: url("../images/mascot-frames/stop-sliding.png");
+    opacity: 1;
+  }
+}
+
+@keyframes balloonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
