@@ -95,6 +95,7 @@ a {
 }
 
 /* section 1 : hero */
+/* section 1 : hero */
 #hero-section {
     position: relative;
     background-image: url("./images/hero-image.jpg");
@@ -475,7 +476,15 @@ a {
 
 /* footer */
 
+
 #footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: aliceblue;
+    background-color: #212a31;
+    padding: 2rem 1rem;
+    gap: 2rem;
+    margin-top: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     color: aliceblue;
@@ -485,6 +494,17 @@ a {
     margin-top: 0;
 }
 
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 .footer-left {
     display: flex;
     flex-direction: column;
