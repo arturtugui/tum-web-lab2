@@ -586,28 +586,27 @@ video {
   height: 100px;
   width: 100px;
   cursor: pointer;
-  opacity: 0;
   background-image: url("../images/mascot-frames/sleep.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  animation: mascotEntrance 2s ease-out 2s forwards;
+  opacity: 0;
+  /* invisible before & during delay */
+  animation: mascotEntrance 2s ease-out 2s both;
+  /* 'both' applies first keyframe during delay */
 }
 
-#mascot.mascot-done {
-  opacity: 1;
+/* After animation ends, JS adds this class */
+
+#mascot.ready {
   animation: none;
-}
-
-#mascot:hover {
-  background-image: url("../images/mascot-frames/active.png") !important;
-  transition: background-image 0.4s ease-in-out;
-  animation: none !important;
-}
-
-#mascot.mascot-done:hover {
-  background-image: url("./images/mascot-frames/active.png") !important;
   opacity: 1;
+  background-image: url("../images/mascot-frames/sleep.png");
+  transition: background-image 0.1s;
+}
+
+#mascot.ready:hover {
+  background-image: url("../images/mascot-frames/active.png");
 }
 
 /* --------------- SPEECH BALLOON ---------------

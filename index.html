@@ -249,9 +249,8 @@
   </body>
 
   <script>
-    const mascot = document.getElementById('mascot');
-    mascot.addEventListener('animationend', () => {
-        mascot.classList.add('mascot-done');
+    document.getElementById('mascot').addEventListener('animationend', (e) => {
+      e.target.classList.add('ready');
     });
   </script>
 </html>
