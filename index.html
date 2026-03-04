@@ -3,10 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My landing page</title>
-    <!-- CHANGE THESE VALUES -->
+    <title>Magazin de mobila Moldova</title>
+    <!-- Reset CSS -->
     <link rel="stylesheet" href="reset.css" />
+    <!-- Old styles (temporary - will migrate to Tailwind) -->
     <link rel="stylesheet" href="style.css" />
+    <!-- Tailwind CSS (compiled) -->
+    <link rel="stylesheet" href="dist/output.css" />
     <!-- icons -->
     <script src="https://kit.fontawesome.com/b9b42215a0.js" crossorigin="anonymous"></script>
   </head>
@@ -14,24 +17,24 @@
   <body>
       <header>
         <div id = "nav">
-          <div id="logo">
+          <a href="#" id="logo">
             <h1>MOLDOVA</h1>
-          </div>
+          </a>
           
           <div class = "nav-element">
-            <a href="#services-section">Services</a>
+            <a href="#services-section">Servicii</a>
           </div>
 
           <div class = "nav-element">
-            <a href="#kitchens-section">Kitchens</a>
+            <a href="#kitchens-section">Bucătării</a>
           </div>
 
           <div class = "nav-element">
-            <a href="#furniture-section">Furniture</a>
+            <a href="#furniture-section">Mobilă</a>
           </div>
 
           <div class = "nav-element">
-            <a href="#footer">Contact</a>
+            <a href="#footer">Contacte</a>
           </div>
         </div>
       </header>
@@ -42,7 +45,7 @@
         </div>        
 
         <div id = "hero-text">
-          <h2>Design inteligent. Materiale durabile. <br> Spații care inspiră.</h2>
+          <h2>Design inteligent.<br> Materiale durabile.<br> Spații care inspiră.</h2>
         </div>
         
         <button id = "hero-button">Comandă acum</button>
@@ -57,7 +60,7 @@
           <div class="service-el">
             <i class="fas fa-couch fa-3x"></i>
 
-            <hr width = "10%" color="#124e66">
+            <hr class="service-divider">
 
             <div class="service-name">
               <h3>Mobilier pentru Living și Dormitor</h3>  
@@ -71,7 +74,7 @@
           <div class="service-el">
             <i class="fas fa-utensils fa-3x"></i>
 
-            <hr width = "10%" color="#124e66">
+            <hr class="service-divider">
 
             <div class="service-name">
               <h3>Bucătării la Comandă</h3>
@@ -85,7 +88,21 @@
           <div class="service-el">
             <i class="fas fa-door-closed fa-3x"></i>
 
-            <hr width = "10%" color="#124e66">
+            <hr class="service-divider">
+
+            <div class="service-name">
+              <h3>Uși pentru Interioare</h3>
+            </div>
+
+            <div class="service-description">
+              <h4>Uși interioare de design, realizate din materiale de calitate, care combină funcționalitatea cu eleganța.</h4>
+            </div>
+          </div>
+
+          <div class="service-el">
+            <i class="fas fa-gopuram fa-3x"></i>
+
+            <hr class="service-divider">
 
             <div class="service-name">
               <h3>Ferestre și Uși PVC</h3>
@@ -100,17 +117,24 @@
       </div>
 
       <div id="kitchens-section">
-        <div id="kitchen-text">
-          <div class="kitchens-heading">
-            <h2>Modele de Bucătării</h2>
+        <div id="kitchen-container-1">
+          <div id="kitchen-info">
+            <div id="kitchen-text">
+              <div class="kitchens-heading">
+                <h2>Modele de Bucătării</h2>
+              </div>
+              <div class="kitchens-description">
+                <h3>Modele disponibile gata de montaj sau personalizate pe comandă.</h3>
+              </div>  
+            </div>
+            <button id = "kitchen-button">Comandă acum</button>
           </div>
-          <div class="kitchens-description">
-            <h3>Modele disponibile gata de montaj sau personalizate pe comandă.</h3>
-          </div>
-          <button id = "kitchen-button">Comandă acum</button>
+          
+          <!-- 5th image here on desktop/mobile (not tablet) -->
+          <img src="./images/bucatarii/b5.jpg" alt="Kitchen 5" id="kitchen-image-5" class="kitchen-image">
         </div>
         
-        <div id="kitchens-container">
+        <div id="kitchens-container-2">
           <img src="./images/bucatarii/b1.jpg" alt="Kitchen 1" class="kitchen-image">
           <img src="./images/bucatarii/b3.jpg" alt="Kitchen 3" class="kitchen-image">
           <img src="./images/bucatarii/b2.jpg" alt="Kitchen 2" class="kitchen-image">
@@ -132,6 +156,11 @@
           <img src="./images/bed/d5 (1).jpg" alt="Furniture 4" class="furniture-image">
           <img src="./images/bed/d6 (1).jpg" alt="Furniture 5" class="furniture-image">
           <img src="./images/bed/d7 (1).jpg" alt="Furniture 6" class="furniture-image">
+        </div>
+
+        <div id="furniture-button-wrapper">
+          <div id="furniture-text">Nu scăpa șansa!</div>
+          <button id="furniture-button">Comandă acum</button>
         </div>
 
       </div>
@@ -157,7 +186,7 @@
         <p>Lun - Dum 8:00 - 17:00</p>
       </div>
       <div class = "footer-right">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1350.8890835558243!2d28.818514415133954!3d47.37724794033385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cbef16bccfbd1f%3A0xd630ca30586656f5!2zU2Fsb251bCBkZSBNb2JpbMSDIOKAnk1vbGRvdmEi!5e0!3m2!1sen!2s!4v1771223832504!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="100%" height="200" style="border:0; border-radius: 0.5rem;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1350.8890835558243!2d28.818514415133954!3d47.37724794033385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cbef16bccfbd1f%3A0xd630ca30586656f5!2zU2Fsb251bCBkZSBNb2JpbMSDIOKAnk1vbGRvdmEi!5e0!3m2!1sen!2s!4v1771223832504!5m2!1sen!2s" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map-iframe"></iframe>
       </div>
     </div>
   </body>
