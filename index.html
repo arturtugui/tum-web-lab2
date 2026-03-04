@@ -38,6 +38,14 @@
           </div>
         </div>
       </header>
+
+      <div id = "mascot">
+      </div>
+
+      <div id="speech-balloon">
+        <p>Ai intrebări?</p>
+        <a href="#footer" id="contact-button">Contactează-ne</a>
+      </div>
     
     <div id = "sections">
       <div id = "hero-section">
@@ -48,7 +56,7 @@
           <h2>Design inteligent.<br> Materiale durabile.<br> Spații care inspiră.</h2>
         </div>
         
-        <button id = "hero-button">Comandă acum</button>
+        <a href="#footer" id="hero-button">Comandă acum</a>
       </div>
 
       <div id="services-section">
@@ -116,30 +124,27 @@
         
       </div>
 
+
       <div id="kitchens-section">
-        <div id="kitchen-container-1">
-          <div id="kitchen-info">
-            <div id="kitchen-text">
-              <div class="kitchens-heading">
-                <h2>Modele de Bucătării</h2>
-              </div>
-              <div class="kitchens-description">
-                <h3>Modele disponibile gata de montaj sau personalizate pe comandă.</h3>
-              </div>  
-            </div>
-            <button id = "kitchen-button">Comandă acum</button>
-          </div>
-          
-          <!-- 5th image here on desktop/mobile (not tablet) -->
-          <img src="./images/bucatarii/b5.jpg" alt="Kitchen 5" id="kitchen-image-5" class="kitchen-image">
-        </div>
         
-        <div id="kitchens-container-2">
-          <img src="./images/bucatarii/b1.jpg" alt="Kitchen 1" class="kitchen-image">
-          <img src="./images/bucatarii/b3.jpg" alt="Kitchen 3" class="kitchen-image">
-          <img src="./images/bucatarii/b2.jpg" alt="Kitchen 2" class="kitchen-image">
-          <img src="./images/bucatarii/b4.jpg" alt="Kitchen 4" class="kitchen-image">
+        <div class="kitchens-heading">
+          <h2>Modele de Bucătării</h2>
         </div>
+
+        <div class="kitchens-description">
+          <h3>Modele disponibile gata de montaj sau personalizate pe comandă.</h3>
+        </div>  
+  
+
+        <a href="#footer" id="kitchen-button">Comandă acum</a>
+
+        <!-- 5th image here on desktop/mobile (not tablet) -->
+        <img src="./images/bucatarii/b5.jpg" alt="Kitchen 5" id="kitchen-image-5" class="kitchen-image">
+        
+        <img src="./images/bucatarii/b1.jpg" alt="Kitchen 1" id="kitchen-image-1" class="kitchen-image">
+        <img src="./images/bucatarii/b3.jpg" alt="Kitchen 3" id="kitchen-image-3" class="kitchen-image">
+        <img src="./images/bucatarii/b2.jpg" alt="Kitchen 2" id="kitchen-image-2" class="kitchen-image">
+        <img src="./images/bucatarii/b4.jpg" alt="Kitchen 4"  id="kitchen-image-4" class="kitchen-image">
       </div>
 
 
@@ -160,14 +165,10 @@
 
         <div id="furniture-button-wrapper">
           <div id="furniture-text">Nu scăpa șansa!</div>
-          <button id="furniture-button">Comandă acum</button>
+          <a href="#footer" id="furniture-button">Comandă acum</a>
         </div>
 
       </div>
-
-
-
-
     </div>
 
     <div id = "footer">
@@ -190,4 +191,11 @@
       </div>
     </div>
   </body>
+
+  <script>
+    const mascot = document.getElementById('mascot');
+    mascot.addEventListener('animationend', () => {
+        mascot.classList.add('mascot-done');
+    });
+  </script>
 </html>
