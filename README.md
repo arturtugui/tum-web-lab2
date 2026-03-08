@@ -20,6 +20,7 @@
 
 ![alt text](report-images/mascot.png)
 
-## Live demo
+## Project Links
 
-- Live demo: https://arturtugui.github.io/tum-web-lab2/
+- GitHub Pages: https://arturtugui.github.io/tum-web-lab2/
+- Website: https://www.mobila-orhei.tech/
