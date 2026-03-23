@@ -1,0 +1,40 @@
+---
+// Component script — runs at build time in Node.js
+---
+
+<!-- Component template — just HTML with expressions -->
+<header>
+  <div
+    id="nav"
+    class="flex fixed items-center top-0 text-[aliceblue] bg-dark-almost-black h-[3.125rem] w-full z-[1000]"
+  >
+    <!-- font-verdana: custom font family from config
+             p-[0.9375rem]: exact original padding (15px at 16px root) -->
+    <a
+      href="#"
+      id="logo"
+      class="font-verdana font-bold text-[1.25rem] p-[0.9375rem] text-white no-underline flex items-center"
+    >
+      <h1 class="m-0 p-0">MOLDOVA</h1>
+    </a>
+
+    <!-- hidden md:block: Servicii link hidden on mobile, shown on tablet+
+             This replaces .nav-element:first-of-type { display:none } + @media query -->
+    <div class="hidden md:block w-1/4 p-5 text-center">
+      <a href="#services-section" class="text-white no-underline">Servicii</a>
+    </div>
+
+    <!-- w-1/4 p-5 text-center: replaces .nav-element styles -->
+    <div class="w-1/4 p-5 text-center">
+      <a href="#kitchens-section" class="text-white no-underline">Bucătării</a>
+    </div>
+
+    <div class="w-1/4 p-5 text-center">
+      <a href="#furniture-section" class="text-white no-underline">Mobilă</a>
+    </div>
+
+    <div class="w-1/4 p-5 text-center">
+      <a href="#footer" class="text-white no-underline">Contacte</a>
+    </div>
+  </div>
+</header>

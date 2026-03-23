@@ -1,7 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Mascot from "../components/Mascot.astro";
+import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
+import Kitchens from "../components/Kitchens.astro";
+import Furniture from "../components/Furniture.astro";
+import Footer from "../components/Footer.astro";
 ---
 
-<Layout title="Home">
-  <h1 class="text-4xl text-test-blue">Hello from index2!</h1>
+<Layout title="Magazin de mobila Moldova">
+  <Header />
+  <Mascot />
+  <div
+    id="sections"
+    class="font-arial bg-pale-light-gray mt-[3.125rem] flex-1 flex flex-col"
+  >
+    <Hero />
+    <Services />
+    <Kitchens />
+    <Furniture />
+  </div>
+  <Footer />
 </Layout>

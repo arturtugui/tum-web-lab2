@@ -1,0 +1,65 @@
+<div
+  id="furniture-section"
+  class="text-[aliceblue] bg-furniture-bg py-8 px-4 flex flex-col items-center"
+>
+  <div class="text-[1.875rem] font-bold mb-4">
+    <h2 class="leading-relaxed">Unitate de living/dormitor integrată</h2>
+  </div>
+
+  <!-- grid-cols-1 md:grid-cols-2 desktop:grid-cols-3: responsive columns
+             md:grid-rows-2 desktop:grid-rows-2: row hints for layout
+             max-w-[1200px]: constrain width on large screens -->
+  <div
+    id="furniture-container"
+    class="grid gap-4 grid-cols-1 md:grid-cols-2 md:grid-rows-2 desktop:grid-cols-3 desktop:grid-rows-2 w-full max-w-[1200px] mt-4"
+  >
+    <img
+      src="/images/bed/d1 (1).jpg"
+      alt="Furniture 1"
+      class="w-full h-auto rounded-lg shadow-md object-cover bg-white"
+    />
+    <img
+      src="/images/bed/d3 (1).jpg"
+      alt="Furniture 2"
+      class="w-full h-auto rounded-lg shadow-md object-cover bg-white"
+    />
+    <img
+      src="/images/bed/d4 (1).jpg"
+      alt="Furniture 3"
+      class="w-full h-auto rounded-lg shadow-md object-cover bg-white"
+    />
+    <img
+      src="/images/bed/d5 (1).jpg"
+      alt="Furniture 4"
+      class="w-full h-auto rounded-lg shadow-md object-cover bg-white"
+    />
+    <img
+      src="/images/bed/d6 (1).jpg"
+      alt="Furniture 5"
+      class="w-full h-auto rounded-lg shadow-md object-cover bg-white"
+    />
+    <img
+      src="/images/bed/d7 (1).jpg"
+      alt="Furniture 6"
+      class="w-full h-auto rounded-lg shadow-md object-cover bg-white"
+    />
+  </div>
+
+  <!-- md:hidden: replaces @media(min-width:768px){display:none!important}
+             This wrapper is mobile-only -->
+  <div
+    id="furniture-button-wrapper"
+    class="w-full flex gap-4 mt-6 items-center md:hidden"
+  >
+    <div class="flex-1 text-[1.25rem] text-[aliceblue] text-center font-bold">
+      Nu scăpa șansa!
+    </div>
+    <a
+      href="#footer"
+      id="furniture-button"
+      class="w-auto min-w-[10rem] max-w-[15rem] py-2.5 px-6 rounded-xl bg-bluer-almost-dark text-white text-[1.25rem] border-none cursor-pointer shadow-md block self-center flex-1 transition-colors duration-300 hover:bg-button-hover no-underline"
+    >
+      Comandă acum
+    </a>
+  </div>
+</div>

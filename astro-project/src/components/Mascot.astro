@@ -1,0 +1,26 @@
+---
+// Component script — runs at build time in Node.js
+---
+
+<!-- Component template — just HTML with expressions --><!-- Changed the input.css things when migration is finished-->
+<div></div>
+<!-- Styled entirely via input.css @layer components -->
+<div id="mascot"></div>
+<!-- Speech balloon: shell styled in input.css -->
+<div id="speech-balloon">
+  <p class="m-0 text-base font-bold text-vivid-blue">Ai intrebări?</p>
+  <a
+    href="#footer"
+    id="contact-button"
+    class="py-2.5 px-5 rounded-lg bg-vivid-blue text-white text-[0.9rem] border-none cursor-pointer font-bold transition-colors duration-300 hover:bg-dark-blue w-fit no-underline"
+  >
+    Contactează-ne
+  </a>
+</div>
+
+<!-- Uncomment when CSS is migrated-->
+<!-- <script>
+  document.getElementById("mascot").addEventListener("animationend", (e) => {
+    e.target.classList.add("ready");
+  });
+</script> -->
