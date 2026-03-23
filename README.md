@@ -1,26 +1,49 @@
-# Lab 3 - Responsive Design & Animations
+# Lab 4 - Static Site Generator & Git Content Management System
 
-// short description of the lab
+## SSG Migration: HTML → Astro
 
-## Responsive design showcase
+Migrated the monolithic HTML landing page to **Astro 4.0** static site generator for improved maintainability, component reusability.
 
-### Kitchens section and navbar on desktop
+### Architecture Changes
 
-![alt text](report-images/kitchens-desktop.png)
+**From:** Single `index.html` → **To:** Component-based Astro project
 
-### Kitchens section on tablet
+```
+astro-project/src/
+├── pages/
+│   └── index.astro              # Homepage assembling all components
+├── components/
+│   ├── Header.astro             # Navigation (4 hardcoded links)
+│   ├── Hero.astro               # Hero section with background image
+│   ├── Services.astro           # 4-column service cards grid
+│   ├── Mascot.astro             # Animated mascot character + speech balloon
+│   ├── Kitchens.astro           # Kitchen gallery with grid-template-areas layout
+│   ├── Furniture.astro          # Bedroom furniture grid (responsive)
+│   └── Footer.astro             # Contact info + address
+├── layouts/
+│   └── Layout.astro             # Global HTML shell, meta tags, FontAwesome
+└── styles/
+    ├── global.css               # Tailwind + custom @layer, responsive fonts
+    ├── mascot.css               # Mascot animations & speech balloon pseudo-elements
+    └── kitchens.css             # Kitchen section grid-area layout
+```
 
-![alt text](report-images/kitchens-tablet.png)
+### Key Changes
 
-### Kitchens section and navbar on mobile
+1. **Component Decomposition:** Broke monolithic HTML into 7 reusable `.astro` components
+2. **CSS Migration:**
+   - Removed all `@apply` directives (Tailwind v4 incompatibility)
+   - Converted to explicit CSS properties for `mascot.css` and `kitchens.css`
+   - Moved complex grid layouts (`grid-template-areas`) to separate CSS files
+3. **Image Paths:** Updated all image references to use root-relative URLs (`/images/...`)
+4. **Build System:** Integrated `@astrojs/tailwind` for zero-config Tailwind support
+5. **Global Configurations:** Moved from `tailwind.config.js` to `global.css`
 
-![alt text](report-images/kitchens-mobile.png)
+## Git CMS Integration
 
-## Mascot showcase
-
-![alt text](report-images/mascot.png)
+_To be implemented in next phase_
 
 ## Project Links
 
-- GitHub Pages: https://arturtugui.github.io/tum-web-lab2/
-- Website: https://www.mobila-orhei.tech/
+- GitHub Repository: https://github.com/arturtugui/tum-web-lab2/
+- Live Site (GitHub Pages): https://www.mobila-orhei.tech/
