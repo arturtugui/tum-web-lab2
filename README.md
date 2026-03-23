@@ -45,5 +45,5 @@ _To be implemented in next phase_
 
 ## Project Links
 
-- GitHub Repository: https://github.com/arturtugui/tum-web-lab2/
+- GitHub Repository: https://arturtugui.github.io/tum-web-lab2/
 - Live Site (GitHub Pages): https://www.mobila-orhei.tech/
