@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+@layer base {
+  /* Responsive root font-size: makes ALL rem-based sizes scale.
+     14px mobile → 16px tablet → 18px desktop.
+     This is a global scaling trick — no Tailwind utility equivalent. */
+  :root {
+    font-size: 14px;
+  }
+  @media (min-width: 768px) {
+    :root {
+      font-size: 16px;
+    }
+  }
+  @media (min-width: 1200px) {
+    :root {
+      font-size: 18px;
+    }
+  }
+}
+
 @theme {
   --color-dark-almost-black: #212a31;
   --color-gray: #2e3944;
@@ -13,10 +32,12 @@
   --color-furniture-bg: #324946;
   --color-button-hover: #1f3449;
   --color-footer-text: #cfd8dc;
-  --color-test-blue: #3b82f6;
 
+  --breakpoint-md: 768px;
   --breakpoint-desktop: 1200px;
 
   --font-arial: Arial, sans-serif;
   --font-verdana: Verdana, sans-serif;
 }
+
+@import "./mascot.css";
