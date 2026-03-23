@@ -5,13 +5,13 @@
 >
   <!-- Overlay: replaces .hero-overlay with inset-0 shorthand for top/left/right/bottom:0
              bg-black/40: semi-transparent black (same as rgba(0,0,0,0.4)) -->
-  <div class="absolute inset-0 bg-black/40 z-[1]"></div>
+  <div class="absolute inset-0 bg-black/40 z-1"></div>
 
   <!-- text-[2rem] md:text-[2.5rem]: responsive font-size
              md:hidden on 2nd <br>: replaces the br:nth-of-type(2) media query -->
   <div
     id="hero-text"
-    class="absolute top-[30%] left-[5%] text-white text-[2rem] md:text-[2.5rem] z-[2]"
+    class="absolute top-[30%] left-[5%] text-white text-[2rem] md:text-[2.5rem] z-2"
   >
     <h2 class="leading-relaxed">
       Design inteligent.<br /> Materiale durabile.<br class="md:hidden" /> Spații
@@ -24,7 +24,7 @@
   <a
     href="#footer"
     id="hero-button"
-    class="absolute top-[18.75rem] left-[15%] py-2.5 px-5 rounded-xl bg-vivid-blue text-white text-[1.25rem] border-none cursor-pointer z-[2] transition-colors duration-300 hover:bg-dark-blue inline-block no-underline"
+    class="absolute top-75 left-[15%] py-2.5 px-5 rounded-xl bg-vivid-blue text-white text-[1.25rem] border-none cursor-pointer z-2 transition-colors duration-300 hover:bg-dark-blue inline-block no-underline"
   >
     Comandă acum
   </a>
