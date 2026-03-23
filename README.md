@@ -13,12 +13,12 @@ astro-project/src/
 ├── pages/
 │   └── index.astro              # Homepage assembling all components
 ├── components/
-│   ├── Header.astro             # Navigation (4 hardcoded links)
-│   ├── Hero.astro               # Hero section with background image
-│   ├── Services.astro           # 4-column service cards grid
-│   ├── Mascot.astro             # Animated mascot character + speech balloon
-│   ├── Kitchens.astro           # Kitchen gallery with grid-template-areas layout
-│   ├── Furniture.astro          # Bedroom furniture grid (responsive)
+│   ├── Header.astro             # Navigation
+│   ├── Hero.astro               # Hero section
+│   ├── Services.astro           # Sevices section
+│   ├── Mascot.astro             # Mascot with speech balloon
+│   ├── Kitchens.astro           # Kitchen section
+│   ├── Furniture.astro          # Bedroom section
 │   └── Footer.astro             # Contact info + address
 ├── layouts/
 │   └── Layout.astro             # Global HTML shell, meta tags, FontAwesome
