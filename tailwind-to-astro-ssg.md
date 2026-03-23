@@ -30,14 +30,14 @@ Astro is a **content-first static site generator** that ships zero JavaScript to
 
 Key wins you get from migrating:
 
-| Feature | Before (plain project) | After (Astro SSG) |
-|---|---|---|
-| JavaScript shipped to browser | All of it | Zero by default |
-| Component model | Framework-specific or none | `.astro` + any UI framework |
-| Routing | Manual or framework router | File-system routing |
-| Data fetching at build time | Custom scripts | `Astro.glob()` / Content Collections |
-| Tailwind integration | Manual PostCSS config | `@astrojs/tailwind` integration |
-| Deploy target | Varies | Static HTML — deployable anywhere |
+| Feature                       | Before (plain project)     | After (Astro SSG)                    |
+| ----------------------------- | -------------------------- | ------------------------------------ |
+| JavaScript shipped to browser | All of it                  | Zero by default                      |
+| Component model               | Framework-specific or none | `.astro` + any UI framework          |
+| Routing                       | Manual or framework router | File-system routing                  |
+| Data fetching at build time   | Custom scripts             | `Astro.glob()` / Content Collections |
+| Tailwind integration          | Manual PostCSS config      | `@astrojs/tailwind` integration      |
+| Deploy target                 | Varies                     | Static HTML — deployable anywhere    |
 
 ---
 
@@ -138,6 +138,43 @@ Astro has an official Tailwind integration that wires up PostCSS automatically:
 npx astro add tailwind
 ```
 
+### In Your Case
+
+You have a `tailwind.config.js` with custom design tokens and a `desktop` breakpoint. In `astro-project/tailwind.config.mjs`, merge your theme extensions:
+
+```js
+export default {
+  content: ["./src/**/*.{astro,html,js,jsx,ts,tsx,vue,svelte}"],
+  theme: {
+    extend: {
+      colors: {
+        "dark-almost-black": "#212a31",
+        gray: "#2e3944",
+        "pale-light-gray": "#d3d8d9",
+        "muted-gray-blue": "#748d92",
+        "vivid-blue": "#124e66",
+        "dark-blue": "#0a2f3f",
+        "text-gray": "#838c90",
+        "bluer-almost-dark": "#324a5f",
+        "kitchen-bg": "#1e2c36",
+        "furniture-bg": "#324946",
+        "button-hover": "#1f3449",
+        "footer-text": "#cfd8dc",
+      },
+      screens: {
+        desktop: "1200px",
+      },
+      fontFamily: {
+        arial: ["Arial", "sans-serif"],
+        verdana: ["Verdana", "sans-serif"],
+      },
+    },
+  },
+};
+```
+
+This ensures all your color tokens (e.g., `text-vivid-blue`, `bg-dark-almost-black`) and the `desktop:` breakpoint are available in your components.
+
 This single command:
 
 1. Installs `@astrojs/tailwind` and `tailwindcss` as dependencies
@@ -147,8 +184,8 @@ This single command:
 Your `astro.config.mjs` will now look like this:
 
 ```js
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import { defineConfig } from "astro/config";
+import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
   integrations: [tailwind()],
@@ -164,17 +201,17 @@ Copy your old config's `theme`, `plugins`, and `extend` sections into the new `t
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.{astro,html,js,jsx,ts,tsx,vue,svelte}',
+    "./src/**/*.{astro,html,js,jsx,ts,tsx,vue,svelte}",
     // Add any extra paths from your old project here
   ],
   theme: {
     extend: {
       // Paste your old theme extensions here
       colors: {
-        brand: '#6366f1',
+        brand: "#6366f1",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ["Inter", "system-ui", "sans-serif"],
       },
     },
   },
@@ -194,7 +231,7 @@ However, if you have custom `@layer` rules or CSS variables, create `src/styles/
 /* src/styles/global.css */
 @layer base {
   :root {
-    --color-primary: theme('colors.indigo.600');
+    --color-primary: theme("colors.indigo.600");
   }
 
   h1 {
@@ -216,16 +253,46 @@ import '../styles/global.css';
 
 Here's how to think about where each file in your old project belongs in Astro:
 
-| Old project | Astro equivalent |
-|---|---|
-| `index.html` | `src/pages/index.astro` |
-| `about.html` | `src/pages/about.astro` |
-| `components/Card.jsx` | `src/components/Card.astro` or keep as `.jsx` |
-| `layouts/Default.html` | `src/layouts/BaseLayout.astro` |
-| `assets/` or `img/` | `public/` (served as-is) or `src/assets/` (optimized) |
-| `styles/global.css` | `src/styles/global.css` → imported in layout |
-| Blog posts (`.md` files) | `src/content/blog/*.md` (Content Collections) |
-| Data files (`.json`) | `src/data/*.json` → imported in frontmatter |
+| Old project              | Astro equivalent                                      |
+| ------------------------ | ----------------------------------------------------- |
+| `index.html`             | `src/pages/index.astro`                               |
+| `about.html`             | `src/pages/about.astro`                               |
+| `components/Card.jsx`    | `src/components/Card.astro` or keep as `.jsx`         |
+| `layouts/Default.html`   | `src/layouts/BaseLayout.astro`                        |
+| `assets/` or `img/`      | `public/` (served as-is) or `src/assets/` (optimized) |
+| `styles/global.css`      | `src/styles/global.css` → imported in layout          |
+| Blog posts (`.md` files) | `src/content/blog/*.md` (Content Collections)         |
+| Data files (`.json`)     | `src/data/*.json` → imported in frontmatter           |
+
+### In Your Case
+
+Your `index.html` is a single monolithic file with multiple sections. Break it down into components:
+
+```
+src/pages/
+  └── index.astro          # Main page (imports all components)
+
+src/components/
+  ├── Header.astro         # Navigation bar
+  ├── Mascot.astro         # Mascot + speech balloon
+  ├── Hero.astro           # Hero section with background image
+  ├── Services.astro       # 4-column services grid
+  ├── Kitchens.astro       # Kitchen models section
+  ├── Furniture.astro      # Furniture/bedroom grid
+  └── Footer.astro         # Contact info + Google Maps
+
+src/layouts/
+  └── Layout.astro         # Base HTML shell (already done)
+
+public/images/
+  ├── hero-image.jpg
+  ├── bed/                 # Furniture images
+  ├── bucatarii/           # Kitchen images
+  └── mascot-frames/       # Mascot animation frames (if needed)
+
+src/styles/
+  └── global.css           # Your custom @layer rules
+```
 
 ---
 
@@ -251,6 +318,65 @@ const items = ["Apples", "Bananas", "Cherries"];
 </ul>
 ```
 
+### In Your Case
+
+Your `index.html` has distinct sections. Here's how to structure them as components:
+
+**Services component** (already shown as an example above):
+
+- Extract the 4 service cards into an array of objects
+- `.map()` over them to render the grid
+- Use your custom color `text-vivid-blue` for the dividers
+
+**Kitchens and Furniture sections**:
+
+- These use complex grid layouts from `input.css` with `grid-template-areas`
+- Keep the grid CSS in `src/styles/global.css` via `@layer components`
+- The Astro component just renders the HTML structure and images
+
+**Header navigation**:
+
+- Extract nav links into an array: `{ name: 'Servicii', href: '#services-section', hideOnMobile: true }`
+- Use `hideOnMobile ? 'hidden md:block' : ''` to conditionally apply Tailwind classes
+
+**Mascot with animation**:
+
+- The animation loop from `input.css` stays in `src/styles/global.css`
+- The `<script>` tag in `Mascot.astro` handles the `animationend` event listener
+- Your custom CSS for `.mascot` and `.speech-balloon` pseudo-elements moves to the global CSS
+
+**Example: Services component structure**:
+
+```astro
+---
+const services = [
+  {
+    icon: 'fa-couch',
+    title: 'Mobilier pentru Living și Dormitor',
+    description: 'Canapele, paturi, dulapuri și piese moderne...'
+  },
+  // ... rest of services
+];
+---
+
+<section id="services-section">
+  <div class="text-[1.875rem] font-bold text-center mt-8">
+    <h2>Servicii oferite</h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 desktop:grid-cols-4 gap-8 items-stretch mt-6 mb-6 mx-4 pb-4">
+    {services.map(service => (
+      <div class="bg-white rounded-2xl shadow-md py-8 px-4 text-center flex flex-col items-center justify-start">
+        <i class={`fas ${service.icon} fa-3x`}></i>
+        <hr class="w-[10%] border-0 border-t border-vivid-blue my-2">
+        <h3 class="text-[1.25rem] font-bold mb-4">{service.title}</h3>
+        <p class="text-base text-muted-gray-blue grow">{service.description}</p>
+      </div>
+    ))}
+  </div>
+</section>
+```
+
 ### Converting a plain HTML page
 
 **Before (plain HTML):**
@@ -258,19 +384,19 @@ const items = ["Apples", "Bananas", "Cherries"];
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>My Site</title>
-  <link rel="stylesheet" href="/styles/output.css" />
-</head>
-<body class="bg-white font-sans">
-  <header class="bg-indigo-600 text-white px-6 py-4">
-    <h1 class="text-2xl font-bold">My Site</h1>
-  </header>
-  <main class="max-w-4xl mx-auto px-6 py-12">
-    <p class="text-gray-700 leading-relaxed">Welcome to my site.</p>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Site</title>
+    <link rel="stylesheet" href="/styles/output.css" />
+  </head>
+  <body class="bg-white font-sans">
+    <header class="bg-indigo-600 text-white px-6 py-4">
+      <h1 class="text-2xl font-bold">My Site</h1>
+    </header>
+    <main class="max-w-4xl mx-auto px-6 py-12">
+      <p class="text-gray-700 leading-relaxed">Welcome to my site.</p>
+    </main>
+  </body>
 </html>
 ```
 
@@ -361,6 +487,46 @@ const posts = await response.json();
 </ul>
 ```
 
+### In Your Case
+
+You have a mascot animation that runs in the browser. This is **client-side JavaScript** and belongs in a `<script>` tag.
+
+**In your current `index.html`:**
+
+```js
+document.getElementById("mascot").addEventListener("animationend", (e) => {
+  e.target.classList.add("ready");
+});
+```
+
+**In `src/components/Mascot.astro`:**
+
+```astro
+---
+// Empty frontmatter — no build-time logic needed
+---
+
+<div id="mascot"></div>
+
+<div id="speech-balloon">
+  <p class="m-0 text-base font-bold text-vivid-blue">Ai intrebări?</p>
+  <a href="#footer" class="py-2.5 px-5 rounded-lg bg-vivid-blue text-white text-[0.9rem] border-none cursor-pointer font-bold transition-colors duration-300 hover:bg-dark-blue w-fit no-underline">
+    Contactează-ne
+  </a>
+</div>
+
+<script>
+  // This runs in the browser when the page loads
+  const mascot = document.getElementById('mascot');
+
+  mascot?.addEventListener('animationend', (e) => {
+    e.target.classList.add('ready');
+  });
+</script>
+```
+
+The animation frames and keyframes stay in `src/styles/global.css` as `@layer components`.
+
 ### Client-side JS (event listeners, animations, DOM manipulation)
 
 Use a `<script>` tag inside the component template. Astro automatically bundles and deduplicates these:
@@ -445,7 +611,10 @@ For each component in your old project, ask:
 // components/Card.jsx
 export default function Card({ title, description, href }) {
   return (
-    <a href={href} className="block rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+    <a
+      href={href}
+      className="block rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow"
+    >
       <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
       <p className="mt-2 text-sm text-gray-600">{description}</p>
     </a>
@@ -537,10 +706,10 @@ Content Collections give you type-safe frontmatter validation. Define a schema i
 
 ```ts
 // src/content/config.ts
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -616,6 +785,49 @@ Reference them with a root-relative path:
 ```astro
 <img src="/images/hero.jpg" alt="Hero" class="w-full h-64 object-cover" />
 ```
+
+### In Your Case
+
+Your images are organized by category:
+
+- `images/hero-image.jpg` — Hero background
+- `images/bucatarii/` — Kitchen showroom photos (b1.jpg to b5.jpg)
+- `images/bed/` — Furniture bedroom units (d1.jpg to d7.jpg)
+
+**Move all of these to `public/images/`** at the same structure:
+
+```
+public/images/
+  ├── hero-image.jpg
+  ├── bucatarii/
+  │   ├── b1.jpg
+  │   ├── b2.jpg
+  │   ├── b3.jpg
+  │   ├── b4.jpg
+  │   └── b5.jpg
+  └── bed/
+      ├── d1 (1).jpg
+      ├── d3 (1).jpg
+      ├── d4 (1).jpg
+      ├── d5 (1).jpg
+      ├── d6 (1).jpg
+      └── d7 (1).jpg
+```
+
+Then in your components, use:
+
+```astro
+<!-- Hero background -->
+<div style="background-image: url('./images/hero-image.jpg')">...</div>
+
+<!-- Kitchen images -->
+<img src="/images/bucatarii/b1.jpg" alt="Kitchen 1" class="w-full h-auto rounded-lg shadow-md object-cover" />
+
+<!-- Furniture images -->
+<img src="/images/bed/d1 (1).jpg" alt="Furniture 1" class="w-full h-auto rounded-lg shadow-md object-cover" />
+```
+
+Since your images don't need WebP conversion or responsive srcsets, using `public/` is simpler than `src/assets/`. Keep the paths exactly as they are in your HTML.
 
 ### `src/assets/` — optimized assets
 
@@ -697,44 +909,131 @@ npm run preview
 Astro's static output deploys to any static host with zero configuration:
 
 **Vercel:**
+
 ```bash
 npm install -g vercel
 vercel
 ```
 
 **Netlify:**
+
 - Connect your Git repo → Set build command to `npm run build` → Set publish directory to `dist`
 
 **Cloudflare Pages:**
+
 - Connect repo → Build command: `npm run build` → Output directory: `dist`
 
 **GitHub Pages:**
+
 ```bash
 npx astro add github
 ```
+
 Then push — GitHub Actions will build and deploy automatically.
+
+### In Your Case
+
+You currently have a live site at `tum-web-lab2.pages.dev` (as indicated by your CNAME file).
+
+**For deployment, you have two options:**
+
+1. **Keep Cloudflare Pages** (recommended, since you already have it set up):
+   - Push your Astro project to the `lab-4-ssg-astro` branch
+   - Cloudflare will auto-detect the `astro-project/` directory and build it
+   - Set build command: `npm run build` (in the `astro-project` directory)
+   - Output directory: `astro-project/dist`
+
+2. **Use GitHub Pages** (simpler if you just want static hosting):
+   ```bash
+   cd astro-project
+   npx astro add github
+   git add .
+   git commit -m "Add GitHub Pages deployment config"
+   git push
+   ```
+   Then enable GitHub Pages in your repo settings, pointing to the `gh-pages` branch.
+
+**Before deploying, verify locally:**
+
+```bash
+cd astro-project
+npm run build
+npm run preview
+# Visit http://localhost:4321 and test all sections, links, and images
+```
 
 ---
 
 ## Common Pitfalls
 
 ### 1. `className` vs `class`
+
 Astro component templates use standard HTML attributes. Unlike JSX, it's `class` not `className`. If you paste React JSX directly, do a find-and-replace.
 
 ### 2. Forgetting `client:*` directives
+
 If a React/Vue component needs interactivity and you forget the directive, it renders as static HTML and event handlers silently do nothing.
 
 ### 3. `window` / `document` in component scripts
+
 The frontmatter (between `---`) runs in Node.js at build time. `window`, `document`, and `localStorage` don't exist there. Move browser-only code into a `<script>` tag or behind a `typeof window !== 'undefined'` guard.
 
 ### 4. Tailwind not purging correctly
+
 If custom component paths aren't in the `content` array of `tailwind.config.mjs`, those classes will be purged in production. Double-check the glob patterns cover all file types you use.
 
 ### 5. Images returning 404 in build
+
 Images imported from `public/` use root-relative URLs (`/images/foo.jpg`). Images from `src/assets/` must be imported in the frontmatter and used with `<Image />`. Mixing these up is a common source of broken images in production.
 
 ### 6. `getStaticPaths` is only for dynamic routes
+
 You only need `getStaticPaths` in files with `[bracket]` route parameters. A regular page like `src/pages/about.astro` just renders statically — no extra config needed.
+
+### In Your Case: Project-Specific Pitfalls
+
+**Custom CSS with `grid-template-areas` and `@layer`:**
+
+- Your Kitchens and Furniture sections use complex CSS Grid layouts defined in `input.css`
+- Move these **entire rules** to `src/styles/global.css` under `@layer components`
+- Astro will apply them globally, but only the CSS that matches Tailwind selectors gets class-based utilities
+- Example structure in global.css:
+  ```css
+  @layer components {
+    #kitchens-section {
+      display: grid;
+      grid-template-areas:
+        "heading"
+        "description"
+        "button"
+        "image1"
+        /* ... */;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .kitchens-heading {
+      grid-area: heading;
+    }
+    .kitchens-description {
+      grid-area: description;
+    }
+    /* etc */
+  }
+  ```
+
+**Custom color names are safe:**
+
+- Your color tokens like `text-vivid-blue`, `bg-dark-kitchen-bg`, `text-footer-text` are defined in `tailwind.config.mjs`
+- They will **always** work because Tailwind generates classes for them at build time
+- No special handling needed — just use them confidently in your components
+
+**Mascot animation pseudo-elements:**
+
+- Your `#speech-balloon` uses `::before` and `::after` for the arrow pointer
+- These must stay in `src/styles/global.css` — they can't be expressed with Tailwind utilities
+- The DOM element HTML stays in `Mascot.astro`, the CSS styling goes to global.css
+- The `animationend` event listener goes in `Mascot.astro`'s `<script>` tag
 
 ---
 
@@ -758,6 +1057,34 @@ Use this to track your migration progress:
 - [ ] `npm run preview` looks correct
 - [ ] Deployed to chosen static host
 
+### In Your Case
+
+Your furniture shop site checklist:
+
+- [ ] **Tailwind config:** Custom colors (vivid-blue, dark-almost-black, etc.) + desktop breakpoint merged into `tailwind.config.mjs`
+- [ ] **Components created:**
+  - [ ] `Header.astro` (with nav links array)
+  - [ ] `Hero.astro` (with background image)
+  - [ ] `Services.astro` (with 4 service cards data)
+  - [ ] `Kitchens.astro` (with kitchen images + grid-area CSS)
+  - [ ] `Furniture.astro` (with furniture grid images)
+  - [ ] `Footer.astro` (with contact info + Google Maps iframe)
+  - [ ] `Mascot.astro` (with animation script)
+- [ ] **CSS migrations:**
+  - [ ] All `#kitchens-section` grid layout rules moved to `src/styles/global.css`
+  - [ ] All `#furniture-section` grid layout rules moved to `src/styles/global.css`
+  - [ ] All `.mascot` animation keyframes moved to `src/styles/global.css`
+  - [ ] All `.speech-balloon` pseudo-element styles moved to `src/styles/global.css`
+- [ ] **Images organized:**
+  - [ ] `public/images/hero-image.jpg` copied
+  - [ ] `public/images/bucatarii/` directory with b1-b5.jpg
+  - [ ] `public/images/bed/` directory with d1-d7.jpg
+- [ ] **Homepage built:** `src/pages/index.astro` imports all 7 components in correct order
+- [ ] **Tested locally:** `npm run dev` → all sections render, links work, images load, mascot animation plays
+- [ ] **Built successfully:** `npm run build` → no errors
+- [ ] **Preview works:** `npm run preview` → site looks identical to original
+- [ ] **Deployed:** Pushed to Cloudflare Pages or GitHub Pages
+
 ---
 
-*Built with Astro and Tailwind CSS — the modern stack for fast, content-first websites.*
+_Built with Astro and Tailwind CSS — the modern stack for fast, content-first websites._

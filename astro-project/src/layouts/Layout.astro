@@ -2,17 +2,21 @@
 // src/layouts/Layout.astro
 import "../styles/global.css";
 
-const { title = "My Site" } = Astro.props;
+const { title = "Magazin de mobila Moldova" } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <!-- FontAwesome icons -->
+    <script
+      src="https://kit.fontawesome.com/b9b42215a0.js"
+      crossorigin="anonymous"></script>
   </head>
-  <body>
+  <body class="font-arial text-base flex flex-col min-h-screen">
     <slot />
   </body>
 </html>

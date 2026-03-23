@@ -1,0 +1,84 @@
+<div id="services-section">
+  <!-- text-[1.875rem]: exact 30px equivalent for heading
+             Replaces .section-heading -->
+  <div class="text-[1.875rem] font-bold text-center mt-8">
+    <h2>Servicii oferite</h2>
+  </div>
+
+  <!-- Responsive grid: 1 col → 2 col (md/tablet) → 4 col (desktop/1200px)
+             Replaces #services-container + its 3 @media queries entirely -->
+  <div
+    id="services-container"
+    class="grid grid-cols-1 md:grid-cols-2 desktop:grid-cols-4 gap-8 items-stretch mt-6 mb-6 mx-4 pb-4"
+  >
+    <!-- Each card: replaces .service-el
+               rounded-2xl shadow-md: card appearance
+               flex flex-col items-center justify-start: internal layout -->
+    <div
+      class="bg-white rounded-2xl shadow-md py-8 px-4 text-center flex flex-col items-center justify-start"
+    >
+      <i class="fas fa-couch fa-3x"></i>
+      <!-- w-[10%] border-0 border-t border-vivid-blue: replaces .service-divider -->
+      <hr class="w-[10%] border-0 border-t border-vivid-blue my-2" />
+      <!-- text-[1.25rem]: replaces .service-name font-size -->
+      <div class="text-[1.25rem] font-bold mb-4">
+        <h3>Mobilier pentru Living și Dormitor</h3>
+      </div>
+      <!-- text-muted-gray-blue grow: replaces .service-description color + flex-grow -->
+      <div class="text-base text-muted-gray-blue grow">
+        <h4>
+          Canapele, paturi, dulapuri și piese moderne realizate din materiale
+          durabile.
+        </h4>
+      </div>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl shadow-md py-8 px-4 text-center flex flex-col items-center justify-start"
+    >
+      <i class="fas fa-utensils fa-3x"></i>
+      <hr class="w-[10%] border-0 border-t border-vivid-blue my-2" />
+      <div class="text-[1.25rem] font-bold mb-4">
+        <h3>Bucătării la Comandă</h3>
+      </div>
+      <div class="text-base text-muted-gray-blue grow">
+        <h4>
+          Proiectăm și realizăm bucătării personalizate, adaptate spațiului și
+          stilului tău de viață.
+        </h4>
+      </div>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl shadow-md py-8 px-4 text-center flex flex-col items-center justify-start"
+    >
+      <i class="fas fa-door-closed fa-3x"></i>
+      <hr class="w-[10%] border-0 border-t border-vivid-blue my-2" />
+      <div class="text-[1.25rem] font-bold mb-4">
+        <h3>Uși pentru Interioare</h3>
+      </div>
+      <div class="text-base text-muted-gray-blue grow">
+        <h4>
+          Uși interioare de design, realizate din materiale de calitate, care
+          combină funcționalitatea cu eleganța.
+        </h4>
+      </div>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl shadow-md py-8 px-4 text-center flex flex-col items-center justify-start"
+    >
+      <i class="fas fa-gopuram fa-3x"></i>
+      <hr class="w-[10%] border-0 border-t border-vivid-blue my-2" />
+      <div class="text-[1.25rem] font-bold mb-4">
+        <h3>Ferestre și Uși PVC</h3>
+      </div>
+      <div class="text-base text-muted-gray-blue grow">
+        <h4>
+          Ferestre și uși PVC de calitate, cu izolație optimă și design modern,
+          pentru confort și eficiență termică.
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
