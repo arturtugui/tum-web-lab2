@@ -1,12 +1,11 @@
 ---
 // Component script — runs at build time in Node.js
+import "../styles/mascot.css";
 ---
 
-<!-- Component template — just HTML with expressions --><!-- Changed the input.css things when migration is finished-->
-<div></div>
-<!-- Styled entirely via input.css @layer components -->
+<!-- Component template — just HTML with expressions -->
 <div id="mascot"></div>
-<!-- Speech balloon: shell styled in input.css -->
+<!-- Mascot + Speech balloon: styled in mascot.css -->
 <div id="speech-balloon">
   <p class="m-0 text-base font-bold text-vivid-blue">Ai intrebări?</p>
   <a
@@ -18,9 +17,12 @@
   </a>
 </div>
 
-<!-- Uncomment when CSS is migrated-->
-<!-- <script>
-  document.getElementById("mascot").addEventListener("animationend", (e) => {
-    e.target.classList.add("ready");
-  });
-</script> -->
+<script>
+  const mascot = document.getElementById("mascot");
+  if (mascot) {
+    mascot.addEventListener("animationend", (e) => {
+      const target = e.target as HTMLElement;
+      target.classList.add("ready");
+    });
+  }
+</script>
