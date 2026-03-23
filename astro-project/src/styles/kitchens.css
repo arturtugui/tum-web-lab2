@@ -1,0 +1,69 @@
+@layer components {
+    #kitchens-section {
+    grid-template-areas:
+      'kitchen-heading'
+      'kitchen-description'
+      'kitchen-button'
+      'kitchen-image-1'
+      'kitchen-image-2'
+      'kitchen-image-3'
+      'kitchen-image-4'
+      'kitchen-image-5';
+  }
+
+  .kitchens-heading { grid-area: kitchen-heading; }
+  .kitchens-description { grid-area: kitchen-description; }
+  #kitchen-button { grid-area: kitchen-button; }
+  #kitchen-image-1 { grid-area: kitchen-image-1; }
+  #kitchen-image-2 { grid-area: kitchen-image-2; }
+  #kitchen-image-3 { grid-area: kitchen-image-3; }
+  #kitchen-image-4 { grid-area: kitchen-image-4; }
+  #kitchen-image-5 { grid-area: kitchen-image-5; }
+
+  @media (max-width: 767px) {
+    #kitchen-image-5 {
+      display: none;
+    }
+  }
+
+  /* Tablet: 3-column layout with text in col 1, images in 2x2 grid */
+  @media (min-width: 768px) {
+    #kitchens-section {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas: none;
+    }
+    .kitchens-heading { grid-area: 1 / 1 / 3 / 2; }
+    .kitchens-description { grid-area: 3 / 1 / 5 / 2; }
+    #kitchen-button {
+      grid-area: 5 / 1 / 7 / 2;
+      position: absolute;
+      bottom: 50%;
+    }
+    #kitchen-image-1 { grid-area: 1 / 2 / 4 / 3; }
+    #kitchen-image-2 { grid-area: 1 / 3 / 4 / 4; }
+    #kitchen-image-3 { grid-area: 4 / 2 / 7 / 3; }
+    #kitchen-image-4 { grid-area: 4 / 3 / 7 / 4; }
+    #kitchen-image-5 { display: none; }
+  }
+
+  /* Desktop: 5th image visible in column 1 below the button */
+  @media (min-width: 1200px) {
+    #kitchens-section {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .kitchens-heading { grid-area: 1 / 1 / 2 / 2; }
+    .kitchens-description { grid-area: 2 / 1 / 3 / 2; }
+    #kitchen-button {
+      grid-area: 3 / 1 / 4 / 2;
+      position: static;
+    }
+    #kitchen-image-5 {
+      display: block;
+      grid-area: 4 / 1 / 7 / 2;
+    }
+    #kitchen-image-1 { grid-area: 1 / 2 / 4 / 3; }
+    #kitchen-image-2 { grid-area: 1 / 3 / 4 / 4; }
+    #kitchen-image-3 { grid-area: 4 / 2 / 7 / 3; }
+    #kitchen-image-4 { grid-area: 4 / 3 / 7 / 4; }
+  }
+}

@@ -28,35 +28,6 @@
     background-image: url("/images/mascot-frames/active.png");
     }
 
-    /* --------------- MASCOT ANIMATION --------------- */
-    @keyframes mascotEntrance {
-    0% {
-        transform: translateX(-300px) scale(1.1);
-        background-image: url("/images/mascot-frames/slide-into.png");
-        opacity: 0;
-    }
-    20% {
-        transform: translateX(-215px) scale(1.1);
-        background-image: url("/images/mascot-frames/slide-into.png");
-        opacity: 1;
-    }
-    60% {
-        transform: translateX(-75px) scale(1.1);
-        background-image: url("/images/mascot-frames/slide-into.png");
-        opacity: 1;
-    }
-    80% {
-        transform: translateX(-10px) scale(0.9);
-        background-image: url("/images/mascot-frames/sliding-momentum.png");
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(0);
-        background-image: url("/images/mascot-frames/stop-sliding.png");
-        opacity: 1;
-    }
-    }
-
     /* --------------- SPEECH BALLOON --------------- */
     #speech-balloon {
     position: fixed;
@@ -120,16 +91,45 @@
     #speech-balloon:hover {
     display: flex;
     }
+}
 
-    /* --------------- BALLOON ANIMATION --------------- */
-    @keyframes balloonAppear {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    }
+/* KEYFRAME ANIMATIONS — Must be OUTSIDE @layer to be globally available.
+   Tailwind v4 may purge content inside @layer if not referenced by utilities. */
+@keyframes mascotEntrance {
+0% {
+    transform: translateX(-300px) scale(1.1);
+    background-image: url("/images/mascot-frames/slide-into.png");
+    opacity: 0;
+}
+20% {
+    transform: translateX(-215px) scale(1.1);
+    background-image: url("/images/mascot-frames/slide-into.png");
+    opacity: 1;
+}
+60% {
+    transform: translateX(-75px) scale(1.1);
+    background-image: url("/images/mascot-frames/slide-into.png");
+    opacity: 1;
+}
+80% {
+    transform: translateX(-10px) scale(0.9);
+    background-image: url("/images/mascot-frames/sliding-momentum.png");
+    opacity: 1;
+}
+100% {
+    transform: translateX(0);
+    background-image: url("/images/mascot-frames/stop-sliding.png");
+    opacity: 1;
+}
+}
+
+@keyframes balloonAppear {
+0% {
+    opacity: 0;
+    transform: translateY(10px);
+}
+100% {
+    opacity: 1;
+    transform: translateY(0);
+}
 }
