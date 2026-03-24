@@ -8,7 +8,7 @@
     height: 100px;
     cursor: pointer;
     z-index: 100;
-    background-image: url("/tum-web-lab2/images/mascot-frames/sleep.png");
+    background-image: url("/images/mascot-frames/sleep.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -20,11 +20,11 @@
     #mascot.ready {
     animation: none;
     opacity: 1;
-    background-image: url("/tum-web-lab2/images/mascot-frames/sleep.png");
+    background-image: url("/images/mascot-frames/sleep.png");
     }
 
     #mascot.ready:hover {
-    background-image: url("/tum-web-lab2/images/mascot-frames/active.png");
+    background-image: url("/images/mascot-frames/active.png");
     }
 
     /* --------------- SPEECH BALLOON --------------- */
@@ -97,27 +97,27 @@
 @keyframes mascotEntrance {
 0% {
     transform: translateX(-300px) scale(1.1);
-    background-image: url("/tum-web-lab2/images/mascot-frames/slide-into.png");
+    background-image: url("/images/mascot-frames/slide-into.png");
     opacity: 0;
 }
 20% {
     transform: translateX(-215px) scale(1.1);
-    background-image: url("/tum-web-lab2/images/mascot-frames/slide-into.png");
+    background-image: url("/images/mascot-frames/slide-into.png");
     opacity: 1;
 }
 60% {
     transform: translateX(-75px) scale(1.1);
-    background-image: url("/tum-web-lab2/images/mascot-frames/slide-into.png");
+    background-image: url("/images/mascot-frames/slide-into.png");
     opacity: 1;
 }
 80% {
     transform: translateX(-10px) scale(0.9);
-    background-image: url("/tum-web-lab2/images/mascot-frames/sliding-momentum.png");
+    background-image: url("/images/mascot-frames/sliding-momentum.png");
     opacity: 1;
 }
 100% {
     transform: translateX(0);
-    background-image: url("/tum-web-lab2/images/mascot-frames/stop-sliding.png");
+    background-image: url("/images/mascot-frames/stop-sliding.png");
     opacity: 1;
 }
 }
