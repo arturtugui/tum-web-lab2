@@ -3,10 +3,10 @@
 media: astro-project/public/images
 
 content:
-  # ── Setari generale ──────────────────────────
+  # Setari generale
   - name: config
     label: Setari generale
-    path: astro-project/src/data/config.json # ← JSON file instead
+    path: astro-project/src/data/config.json
     type: file
     fields:
       - name: title
@@ -17,6 +17,16 @@ content:
         type: string
       - name: keywords
         label: Cuvinte-cheie (descriptoare SEO)
+        type: string
+
+  # Header
+  - name: header
+    label: Secțiune de navigare
+    path: astro-project/src/data/header.json
+    type: file
+    fields:
+      - name: company-name
+        label: Nume Companie
         type: string
 
   # ── Kitchen Projects (optional) ───────────────────

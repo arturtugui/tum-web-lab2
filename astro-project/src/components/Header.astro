@@ -1,5 +1,8 @@
 ---
 // Component script — runs at build time in Node.js
+import header from "../data/header.json";
+
+const { "company-name": companyName } = header;
 ---
 
 <!-- Component template — just HTML with expressions -->
@@ -15,7 +18,7 @@
       id="logo"
       class="font-verdana font-bold text-[1.25rem] p-3.75 text-white no-underline flex items-center"
     >
-      <h1 class="m-0 p-0">MOLDOVA</h1>
+      <h1 class="m-0 p-0">{companyName}</h1>
     </a>
 
     <!-- hidden md:block: Servicii link hidden on mobile, shown on tablet+
