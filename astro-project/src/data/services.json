@@ -1,0 +1,35 @@
+{
+  "heading": "Servicii oferite",
+  "items": [
+    {
+      "title": "Mobilier pentru Living și Dormitor",
+      "slug": "living",
+      "icon": "fa-couch",
+      "description": "Canapele, paturi, dulapuri și piese moderne realizate din materiale durabile."
+    },
+    {
+      "title": "Bucătării la Comandă",
+      "slug": "kitchens",
+      "icon": "fa-utensils",
+      "description": "Proiectăm și realizăm bucătării personalizate, adaptate spațiului și stilului tău de viață."
+    },
+    {
+      "title": "Uși pentru Interioare",
+      "slug": "doors",
+      "icon": "fa-door-closed",
+      "description": "Uși interioare de design, realizate din materiale de calitate, care combină funcționalitatea cu eleganța."
+    },
+    {
+      "title": "Ferestre și Uși PVC",
+      "slug": "windows",
+      "icon": "fa-gopuram",
+      "description": "Ferestre și uși PVC de calitate, cu izolație optimă și design modern, pentru confort și eficiență termică."
+    },
+    {
+      "title": "Ferestre și Uși PVC",
+      "slug": "windows",
+      "icon": "fa-gopuram",
+      "description": "Ferestre și uși PVC de calitate, cu izolație optimă și design modern, pentru confort și eficiență termică."
+    }
+  ]
+}
