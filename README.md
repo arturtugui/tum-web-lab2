@@ -39,9 +39,57 @@ astro-project/src/
 4. **Build System:** Integrated `@astrojs/tailwind` for zero-config Tailwind support
 5. **Global Configurations:** Moved from `tailwind.config.js` to `global.css`
 
-## Git CMS Integration
+## Git CMS Integration - PagesCMS Implementation
 
-_To be implemented in next phase_
+### What Was Done ✅
+
+**All major content sections** now pull data from editable JSON files stored in `src/data/`:
+
+| Section   | Editable Fields                                     | Type          |
+| --------- | --------------------------------------------------- | ------------- |
+| Config    | Title, description, keywords                        | Fixed         |
+| Header    | Company name                                        | Fixed         |
+| Hero      | Desktop/mobile text, CTA button, background image   | Fixed         |
+| Services  | Heading + items (title, description, icon)          | Dynamic array |
+| Furniture | Heading + images, button texts                      | Dynamic array |
+| Kitchens  | Heading, description, 5 image URLs + alt text       | Fixed count   |
+| Footer    | Contact sections (heading + description), Maps link | Dynamic array |
+| Mascot    | Question text + button text                         | Fixed         |
+
+**CMS Configuration** - `.pages.yml` defines all editable fields for PagesCMS:
+
+- Uses `type: object` + `list: true` for repeatable items
+- Users can add/remove items from array sections via CMS UI
+- Auto-commit changes to GitHub, auto-triggers site rebuild
+
+### What You Cannot Do Yet ❌
+
+- **Add new sections** from CMS (e.g., "Testimonials") - requires code/git access
+- **Edit CSS/Colors** - styling is hardcoded in Tailwind utilities and component stylesheets
+
+### Design Decisions
+
+**JSON-only architecture** vs. Content Collections - Reduces complexity, minimal overhead, direct component imports
+
+**Dynamic vs. Static Arrays:**
+
+- **Kitchen images:** 5 fixed (specific layout positioning required)
+- **Services, Furniture, Footer:** Dynamic count (users can add/remove)
+
+**Field Types:**
+
+- `string` - Single-line text (headings, labels)
+- `text` - Multi-line text (descriptions)
+- `object` + `list: true` - Repeatable fields
+
+**Showcase Images:**
+
+- Kitchen models: Before/after installation (1200×800px each)
+- Furniture: Room staging with products (1024×768px)
+- Services: Work process photos (800×600px)
+- Hero: Wide showroom banner (1920×600px)
+
+---
 
 ## Project Links
 

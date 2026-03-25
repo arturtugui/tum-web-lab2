@@ -29,6 +29,25 @@ content:
         label: Nume Companie
         type: string
 
+  # Hero
+  - name: hero
+    label: Hero (Secțiune principală)
+    path: astro-project/src/data/hero.json
+    type: file
+    fields:
+      - {
+          name: hero-text-desktop,
+          label: "Text Desktop (cu <br/>)",
+          type: text,
+        }
+      - { name: hero-text-mobile, label: "Text Mobil (cu <br/>)", type: text }
+      - { name: cta-button-text, label: "Text Buton CTA", type: string }
+      - {
+          name: hero-background-image,
+          label: "Imagine de fundal (URL)",
+          type: string,
+        }
+
     # Services
   - name: services
     label: Servicii
