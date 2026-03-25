@@ -71,6 +71,56 @@ content:
           - { name: src, label: "Imagine (URL)", type: string }
           - { name: alt, label: "Text Alternativ", type: string }
 
+  # Kitchens
+  - name: kitchens
+    label: Bucătării
+    path: astro-project/src/data/kitchens.json
+    type: file
+    fields:
+      - { name: heading, label: "Titlu Secțiune", type: string }
+      - { name: description, label: "Descriere Secțiune", type: text }
+      - { name: button-text, label: "Text Buton", type: string }
+      - name: image-1-src
+        label: "Imagine 1 - URL"
+        type: string
+      - {
+          name: image-1-alt,
+          label: "Imagine 1 - Text Alternativ",
+          type: string,
+        }
+      - name: image-2-src
+        label: "Imagine 2 - URL"
+        type: string
+      - {
+          name: image-2-alt,
+          label: "Imagine 2 - Text Alternativ",
+          type: string,
+        }
+      - name: image-3-src
+        label: "Imagine 3 - URL"
+        type: string
+      - {
+          name: image-3-alt,
+          label: "Imagine 3 - Text Alternativ",
+          type: string,
+        }
+      - name: image-4-src
+        label: "Imagine 4 - URL"
+        type: string
+      - {
+          name: image-4-alt,
+          label: "Imagine 4 - Text Alternativ",
+          type: string,
+        }
+      - name: image-5-src
+        label: "Imagine 5 - URL"
+        type: string
+      - {
+          name: image-5-alt,
+          label: "Imagine 5 - Text Alternativ",
+          type: string,
+        }
+
   # Footer
   - name: footer
     label: Footer (Secțiune de Contact)
@@ -90,7 +140,7 @@ content:
 
   # Mascot
   - name: mascot
-    label: Mascot (Secțiune de Contact - Chat)
+    label: Mascot
     path: astro-project/src/data/mascot.json
     type: file
     fields:
