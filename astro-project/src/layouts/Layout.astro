@@ -4,6 +4,7 @@ import "../styles/global.css";
 import { getEntry } from "astro:content";
 
 const configEntry = await getEntry("config", "config");
+if (!configEntry) throw new Error("config not found");
 const { title } = configEntry.data;
 ---
 

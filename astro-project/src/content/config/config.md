@@ -1,3 +1,3 @@
 ---
-title: Magazin de mobila Moldova
+title: Test
 ---
