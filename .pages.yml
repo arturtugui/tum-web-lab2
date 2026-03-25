@@ -29,20 +29,14 @@ content:
         label: Nume Companie
         type: string
 
-    # Services
+  # Services
   - name: services
     label: Servicii
-    path: astro-project/src/data/services.json
-    type: file
+    path: astro-project/src/data/services
+    filename: "{fields.slug}.json"
+    type: collection
     fields:
-      - name: heading
-        label: Titlu Secțiune
-        type: string
-      - name: items
-        label: Lista Servicii
-        type: object
-        fields:
-          - { name: title, label: "Titlu Serviciu", type: string }
-          - { name: slug, label: "Slug (ID)", type: string }
-          - { name: icon, label: "Icon (fa-class)", type: string }
-          - { name: description, label: "Descriere", type: text }
+      - { name: title, label: "Titlu Serviciu", type: string }
+      - { name: slug, label: "Slug (ID)", type: string }
+      - { name: icon, label: "Icon (fa-class)", type: string }
+      - { name: description, label: "Descriere", type: text }
