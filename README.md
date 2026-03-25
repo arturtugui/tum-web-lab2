@@ -84,10 +84,14 @@ astro-project/src/
 
 **Showcase Images:**
 
-- Kitchen models: Before/after installation (1200×800px each)
-- Furniture: Room staging with products (1024×768px)
-- Services: Work process photos (800×600px)
-- Hero: Wide showroom banner (1920×600px)
+- PagesCMS UI setari generale
+  ![alt text](report-images/image-1.png)
+- PagesCMS UI array de furniture
+  ![alt text](report-images/image-2.png)
+- Services: Before/after adding 2 new
+  ![alt text](report-images/image.png)
+- Furniture: modificari in text
+  ![alt text](report-images/image-3.png)
 
 ---
 
