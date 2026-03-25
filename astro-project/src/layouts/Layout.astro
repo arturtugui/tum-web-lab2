@@ -1,8 +1,10 @@
 ---
 // src/layouts/Layout.astro
 import "../styles/global.css";
+import { getEntry } from "astro:content";
 
-import config from "../data/config.json";
+const configEntry = await getEntry("config", "config");
+const { title } = configEntry.data;
 ---
 
 <!doctype html>
