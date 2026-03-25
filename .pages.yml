@@ -1,0 +1,167 @@
+# PagesCMS Configuration for Mobila Orhei
+
+media: astro-project/public/images
+
+content:
+  # Setari generale
+  - name: config
+    label: Setari generale
+    path: astro-project/src/data/config.json
+    type: file
+    fields:
+      - name: title
+        label: Titlu Tab Browser
+        type: string
+      - name: description
+        label: Descriere (pentru meta tags)
+        type: string
+      - name: keywords
+        label: Cuvinte-cheie (descriptoare SEO)
+        type: string
+
+  # Header
+  - name: header
+    label: Secțiune de navigare
+    path: astro-project/src/data/header.json
+    type: file
+    fields:
+      - name: company-name
+        label: Nume Companie
+        type: string
+
+  # Hero
+  - name: hero
+    label: Hero (Secțiune principală)
+    path: astro-project/src/data/hero.json
+    type: file
+    fields:
+      - {
+          name: hero-text-desktop,
+          label: "Text Desktop (cu <br/>)",
+          type: text,
+        }
+      - { name: hero-text-mobile, label: "Text Mobil (cu <br/>)", type: text }
+      - { name: cta-button-text, label: "Text Buton CTA", type: string }
+      - {
+          name: hero-background-image,
+          label: "Imagine de fundal (URL)",
+          type: string,
+        }
+
+    # Services
+  - name: services
+    label: Servicii
+    path: astro-project/src/data/services.json
+    type: file
+    fields:
+      - name: heading
+        label: Titlu Secțiune
+        type: string
+      - name: items
+        label: Lista Servicii
+        type: object
+        list: true
+        fields:
+          - { name: title, label: "Titlu Serviciu", type: string }
+          - { name: slug, label: "Slug (ID)", type: string }
+          - { name: icon, label: "Icon (fa-class)", type: string }
+          - { name: description, label: "Descriere", type: text }
+
+  # Furniture
+  - name: furniture
+    label: Mobilă
+    path: astro-project/src/data/furniture.json
+    type: file
+    fields:
+      - name: heading
+        label: Titlu Secțiune
+        type: string
+      - name: button-label
+        label: Text Label Buton (mobil)
+        type: string
+      - name: button-text
+        label: Text Buton
+        type: string
+      - name: items
+        label: Lista Imagini
+        type: object
+        list: true
+        fields:
+          - { name: src, label: "Imagine (URL)", type: string }
+          - { name: alt, label: "Text Alternativ", type: string }
+
+  # Kitchens
+  - name: kitchens
+    label: Bucătării
+    path: astro-project/src/data/kitchens.json
+    type: file
+    fields:
+      - { name: heading, label: "Titlu Secțiune", type: string }
+      - { name: description, label: "Descriere Secțiune", type: text }
+      - { name: button-text, label: "Text Buton", type: string }
+      - name: image-1-src
+        label: "Imagine 1 - URL"
+        type: string
+      - {
+          name: image-1-alt,
+          label: "Imagine 1 - Text Alternativ",
+          type: string,
+        }
+      - name: image-2-src
+        label: "Imagine 2 - URL"
+        type: string
+      - {
+          name: image-2-alt,
+          label: "Imagine 2 - Text Alternativ",
+          type: string,
+        }
+      - name: image-3-src
+        label: "Imagine 3 - URL"
+        type: string
+      - {
+          name: image-3-alt,
+          label: "Imagine 3 - Text Alternativ",
+          type: string,
+        }
+      - name: image-4-src
+        label: "Imagine 4 - URL"
+        type: string
+      - {
+          name: image-4-alt,
+          label: "Imagine 4 - Text Alternativ",
+          type: string,
+        }
+      - name: image-5-src
+        label: "Imagine 5 - URL"
+        type: string
+      - {
+          name: image-5-alt,
+          label: "Imagine 5 - Text Alternativ",
+          type: string,
+        }
+
+  # Footer
+  - name: footer
+    label: Footer (Secțiune de Contact)
+    path: astro-project/src/data/footer.json
+    type: file
+    fields:
+      - name: items
+        label: Elemente Footer
+        type: object
+        list: true
+        fields:
+          - { name: heading, label: "Titlu Secțiune", type: string }
+          - { name: description, label: "Descriere/Detalii", type: text }
+      - name: maps-link
+        label: Link Google Maps (iframe src)
+        type: string
+
+  # Mascot
+  - name: mascot
+    label: Mascot
+    path: astro-project/src/data/mascot.json
+    type: file
+    fields:
+      - { name: question-text, label: "Text Întrebare", type: string }
+      - { name: button-text, label: "Text Buton", type: string }

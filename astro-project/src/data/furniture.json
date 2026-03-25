@@ -1,0 +1,31 @@
+{
+  "heading": "Unitate de living/dormitor integrată",
+  "button-label": "Nu scăpa șansa!",
+  "button-text": "Comandă acum",
+  "items": [
+    {
+      "src": "/images/bed/d1 (1).jpg",
+      "alt": "Furniture 1"
+    },
+    {
+      "src": "/images/bed/d3 (1).jpg",
+      "alt": "Furniture 2"
+    },
+    {
+      "src": "/images/bed/d4 (1).jpg",
+      "alt": "Furniture 3"
+    },
+    {
+      "src": "/images/bed/d5 (1).jpg",
+      "alt": "Furniture 4"
+    },
+    {
+      "src": "/images/bed/d6 (1).jpg",
+      "alt": "Furniture 5"
+    },
+    {
+      "src": "/images/bed/d7 (1).jpg",
+      "alt": "Furniture 6"
+    }
+  ]
+}

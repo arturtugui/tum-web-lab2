@@ -1,14 +1,42 @@
+---
+import kitchensData from "../data/kitchens.json";
+
+const {
+  heading,
+  description,
+  "button-text": buttonText,
+  "image-1-src": image1Src,
+  "image-1-alt": image1Alt,
+  "image-2-src": image2Src,
+  "image-2-alt": image2Alt,
+  "image-3-src": image3Src,
+  "image-3-alt": image3Alt,
+  "image-4-src": image4Src,
+  "image-4-alt": image4Alt,
+  "image-5-src": image5Src,
+  "image-5-alt": image5Alt,
+} = kitchensData;
+
+const images = [
+  { src: image1Src, alt: image1Alt, id: "kitchen-image-5" },
+  { src: image2Src, alt: image2Alt, id: "kitchen-image-1" },
+  { src: image3Src, alt: image3Alt, id: "kitchen-image-3" },
+  { src: image4Src, alt: image4Alt, id: "kitchen-image-2" },
+  { src: image5Src, alt: image5Alt, id: "kitchen-image-4" },
+];
+---
+
 <div
   id="kitchens-section"
   class="grid gap-8 bg-kitchen-bg text-[aliceblue] py-8 px-4 relative place-items-center"
 >
   <!-- Replaces .kitchens-heading (keeps class for grid-area targeting in input.css) -->
   <div class="kitchens-heading text-[1.875rem] font-bold text-center">
-    <h2>Modele de Bucătării</h2>
+    <h2>{heading}</h2>
   </div>
 
   <div class="kitchens-description text-base text-text-gray text-center">
-    <h3>Modele disponibile gata de montaj sau personalizate pe comandă.</h3>
+    <h3>{description}</h3>
   </div>
 
   <!-- Kitchen CTA button: all visual styles as utilities
@@ -18,38 +46,18 @@
     id="kitchen-button"
     class="w-auto min-w-40 max-w-60 py-2.5 px-6 rounded-xl bg-bluer-almost-dark text-white text-[1.25rem] border-none cursor-pointer shadow-md shrink-0 whitespace-nowrap self-center transition-colors duration-300 hover:bg-button-hover no-underline"
   >
-    Comandă acum
+    {buttonText}
   </a>
 
   <!-- Kitchen images: visual styles as utilities, grid-area in input.css -->
-  <img
-    src="/images/bucatarii/b5.jpg"
-    alt="Kitchen 5"
-    id="kitchen-image-5"
-    class="w-full h-auto rounded-lg shadow-md object-cover"
-  />
-  <img
-    src="/images/bucatarii/b1.jpg"
-    alt="Kitchen 1"
-    id="kitchen-image-1"
-    class="w-full h-auto rounded-lg shadow-md object-cover"
-  />
-  <img
-    src="/images/bucatarii/b3.jpg"
-    alt="Kitchen 3"
-    id="kitchen-image-3"
-    class="w-full h-auto rounded-lg shadow-md object-cover"
-  />
-  <img
-    src="/images/bucatarii/b2.jpg"
-    alt="Kitchen 2"
-    id="kitchen-image-2"
-    class="w-full h-auto rounded-lg shadow-md object-cover"
-  />
-  <img
-    src="/images/bucatarii/b4.jpg"
-    alt="Kitchen 4"
-    id="kitchen-image-4"
-    class="w-full h-auto rounded-lg shadow-md object-cover"
-  />
+  {
+    images.map((image) => (
+      <img
+        src={image.src}
+        alt={image.alt}
+        id={image.id}
+        class="w-full h-auto rounded-lg shadow-md object-cover"
+      />
+    ))
+  }
 </div>

@@ -1,18 +1,21 @@
 ---
 import "../styles/mascot.css";
+import mascotData from "../data/mascot.json";
+
+const { "question-text": questionText, "button-text": buttonText } = mascotData;
 ---
 
 <!-- Component template — just HTML with expressions -->
 <div id="mascot"></div>
 <!-- Mascot + Speech balloon: styled in mascot.css -->
 <div id="speech-balloon">
-  <p class="m-0 text-base font-bold text-vivid-blue">Ai intrebări?</p>
+  <p class="m-0 text-base font-bold text-vivid-blue">{questionText}</p>
   <a
     href="#footer"
     id="contact-button"
     class="py-2.5 px-5 rounded-lg bg-vivid-blue text-white text-[0.9rem] border-none cursor-pointer font-bold transition-colors duration-300 hover:bg-dark-blue w-fit no-underline"
   >
-    Contactează-ne
+    {buttonText}
   </a>
 </div>
 
