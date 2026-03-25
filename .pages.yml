@@ -47,3 +47,26 @@ content:
           - { name: slug, label: "Slug (ID)", type: string }
           - { name: icon, label: "Icon (fa-class)", type: string }
           - { name: description, label: "Descriere", type: text }
+
+  # Furniture
+  - name: furniture
+    label: Mobilă
+    path: astro-project/src/data/furniture.json
+    type: file
+    fields:
+      - name: heading
+        label: Titlu Secțiune
+        type: string
+      - name: button-label
+        label: Text Label Buton (mobil)
+        type: string
+      - name: button-text
+        label: Text Buton
+        type: string
+      - name: items
+        label: Lista Imagini
+        type: object
+        list: true
+        fields:
+          - { name: src, label: "Imagine (URL)", type: string }
+          - { name: alt, label: "Text Alternativ", type: string }
