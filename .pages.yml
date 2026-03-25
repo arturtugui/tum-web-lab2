@@ -70,3 +70,29 @@ content:
         fields:
           - { name: src, label: "Imagine (URL)", type: string }
           - { name: alt, label: "Text Alternativ", type: string }
+
+  # Footer
+  - name: footer
+    label: Footer (Secțiune de Contact)
+    path: astro-project/src/data/footer.json
+    type: file
+    fields:
+      - name: items
+        label: Elemente Footer
+        type: object
+        list: true
+        fields:
+          - { name: heading, label: "Titlu Secțiune", type: string }
+          - { name: description, label: "Descriere/Detalii", type: text }
+      - name: maps-link
+        label: Link Google Maps (iframe src)
+        type: string
+
+  # Mascot
+  - name: mascot
+    label: Mascot (Secțiune de Contact - Chat)
+    path: astro-project/src/data/mascot.json
+    type: file
+    fields:
+      - { name: question-text, label: "Text Întrebare", type: string }
+      - { name: button-text, label: "Text Buton", type: string }
