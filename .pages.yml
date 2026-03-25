@@ -6,7 +6,7 @@ content:
   # ── Setari generale ──────────────────────────
   - name: config
     label: Setari generale
-    path: astro-project/src/content/config/config.md # ← Full file path
+    path: astro-project/src/data/config.json # ← JSON file instead
     type: file
     fields:
       - name: title

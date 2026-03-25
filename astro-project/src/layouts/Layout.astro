@@ -1,11 +1,9 @@
 ---
 // src/layouts/Layout.astro
 import "../styles/global.css";
-import { getEntry } from "astro:content";
+import config from "../data/config.json";
 
-const configEntry = await getEntry("config", "config");
-if (!configEntry) throw new Error("config not found");
-const { title, description, keywords } = configEntry.data;
+const { title, description, keywords } = config;
 ---
 
 <!doctype html>
