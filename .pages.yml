@@ -1,54 +1,17 @@
 # PagesCMS Configuration for Mobila Orhei
-# Docs: https://pagescms.org/docs/configuration
 
-media: astro-project/public/images/uploads
+media: astro-project/public/images
 
 content:
-  # ── Homepage (Main Page) ──────────────────────────
-  - name: home
-    label: Pagina Principală
-    path: astro-project/src/content/pages
-    filename: home.md
-    type: file # single file, not collection
+  # ── Setari generale ──────────────────────────
+  - name: config
+    label: Setari generale
+    path: astro-project/src/data
+    filename: config.json
+    type: file
     fields:
       - name: title
-        label: Titlu Site
-        type: string
-      - name: description
-        label: Meta Description (SEO)
-        type: string
-      - name: hero_heading
-        label: Hero - Titlu Principal
-        type: string
-      - name: hero_subheading
-        label: Hero - Subtitlu
-        type: string
-      - name: hero_cta_label
-        label: Hero - Buton CTA
-        type: string
-      - name: hero_cta_url
-        label: Hero - Link Buton
-        type: string
-      - name: services_heading
-        label: Servicii - Titlu
-        type: string
-      - name: services_description
-        label: Servicii - Descriere
-        type: rich-text
-      - name: kitchens_heading
-        label: Bucătării - Titlu
-        type: string
-      - name: kitchens_description
-        label: Bucătării - Descriere
-        type: rich-text
-      - name: furniture_heading
-        label: Mobilă - Titlu
-        type: string
-      - name: furniture_description
-        label: Mobilă - Descriere
-        type: rich-text
-      - name: footer_text
-        label: Footer - Text
+        label: Titlu Tab Browser
         type: string
 
   # ── Kitchen Projects (optional) ───────────────────

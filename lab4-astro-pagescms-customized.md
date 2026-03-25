@@ -27,7 +27,7 @@
 
 ### What is PagesCMS?
 
-PagesCMS is a **free, open-source, Git-based CMS** that lets your team (or clients) edit product descriptions, pricing, services, and testimonials without touching code. All content lives in Markdown/JSON files in your GitHub repo. No database. No monthly fees. When someone edits a product in PagesCMS, it commits directly to GitHub, and your Astro site rebuilds automatically.
+PagesCMS is a **free, open-source, Git-based CMS** that lets your team (or clients) edit product descriptions, pricing, services, and testimonials without touching code. All content lives in JSON files in your GitHub repo. No database. No monthly fees. When someone edits a product in PagesCMS, it commits directly to GitHub, and your Astro site rebuilds automatically.
 
 ### How the pieces fit together (for a furniture store)
 
@@ -52,7 +52,126 @@ or service description
 
 ---
 
-## Prerequisites
+## How It Works: The PagesCMS + Astro Bridge
+
+### Approach: JSON Files (Simple & Recommended for You)
+
+The guide uses **JSON files with direct import** — the simplest way to connect PagesCMS to Astro.
+
+> **Note:** Gemini recommended Astro **Content Collections** with TypeScript schemas (Zod). That's also valid but requires more setup code. We chose the simpler JSON approach your colleague used with Eleventy.
+
+**Why JSON files are simpler:**
+
+- No `src/content/config.ts` schema file needed
+- No `defineCollection()` or Zod validation
+- Just import and use: `import home from '../data/home.json'`
+- PagesCMS doesn't care how you use the data — it just edits the JSON file
+
+**Trade-off:**
+
+- Content Collections (Gemini's approach) = Type-safe, catches errors before build
+- JSON files (your approach) = Simple, flexible, faster to set up
+
+Both work. We're using JSON files because they're closer to what your colleague did and require less boilerplate.
+
+### The Three Core Concepts
+
+**1. Metadata (`.pages.yml`)**
+This YAML file in your repo root tells PagesCMS:
+
+- Where your data files live (`src/data/home.json`)
+- What fields are editable (`hero_heading`, `services`, etc.)
+- Where media uploads go (`public/images/uploads/`)
+
+PagesCMS reads `.pages.yml` once and uses it to build the editing UI.
+
+**2. Data Files (JSON)**
+These are plain JSON files in `src/data/` that store all your content:
+
+```json
+{
+  "title": "Mobila Orhei",
+  "hero_heading": "Mobilă Premium",
+  "services": [...]
+}
+```
+
+PagesCMS **edits these files directly** and commits to GitHub. No database. No API.
+
+**3. Astro Components**
+Your `.astro` components **import the JSON** and display it:
+
+```astro
+import home from '../data/home.json';
+<h1>{home.hero_heading}</h1>
+```
+
+### The Workflow Order (Step-by-Step)
+
+This is critical — do it in this order:
+
+| Step | What                                                  | Why                              |
+| ---- | ----------------------------------------------------- | -------------------------------- |
+| 1️⃣   | Create **JSON data files** (`src/data/home.json`)     | Establishes the data structure   |
+| 2️⃣   | Create/update **`.pages.yml`** to match those files   | Tells the CMS what fields exist  |
+| 3️⃣   | Update **Astro components** to accept props from JSON | Displays the data in HTML        |
+| 4️⃣   | Update **`index.astro`** to import and pass data      | Wires everything together        |
+| 5️⃣   | Commit everything to GitHub                           | Prepares for PagesCMS connection |
+| 6️⃣   | Connect PagesCMS GitHub App to repo                   | CMS can now edit the JSON files  |
+
+> ⚠️ **Don't do this backwards** — if you configure `.pages.yml` for fields that don't exist in `home.json`, PagesCMS will fail to load.
+
+### Media Handling (Images & Uploads)
+
+PagesCMS manages image uploads automatically. Here's how:
+
+**In `.pages.yml`, you define the media folder:**
+
+```yaml
+media:
+  input: astro-project/public/images/uploads # where files are stored
+  output: /images/uploads # URL path for HTML
+```
+
+**When someone uploads an image in the CMS:**
+
+1. PagesCMS saves it to `astro-project/public/images/uploads/photo.jpg`
+2. PagesCMS writes the **path** to your JSON file: `"image": "/images/uploads/photo.jpg"`
+3. Your Astro component displays it: `<img src={home.hero_image} />`
+
+**Important:** The `input` and `output` paths must match:
+
+- `input`: The actual file system path (relative to repo root)
+- `output`: The URL path that Astro serves (starts with `/`)
+
+### Components & Astro Props
+
+Your Astro components need to accept data as **props**. This is the "link" between the JSON and the HTML.
+
+**Example: Hero.astro**
+
+```astro
+---
+interface Props {
+  heading: string;
+  subheading: string;
+}
+
+const { heading, subheading } = Astro.props;
+---
+
+<h1>{heading}</h1>
+<p>{subheading}</p>
+```
+
+Then in `index.astro`, you **pass the data**:
+
+```astro
+import home from '../data/home.json';
+<Hero heading={home.hero_heading} subheading={home.hero_subheading} />
+```
+
+---
 
 | Tool           | Version    | Check                    |
 | -------------- | ---------- | ------------------------ |
@@ -119,85 +238,46 @@ npm run dev
 
 Verify the site loads at `http://localhost:3000` with proper styling.
 
-### 1.3 Create the content directory
+### 1.3 Create the data directory
 
 ```bash
 cd astro-project
-mkdir -p src/content/pages
-mkdir -p src/content/products    # for furniture/kitchen products
-mkdir -p src/content/services    # for delivery, installation, warranty
+mkdir -p src/data
+mkdir -p public/images/uploads   # where PagesCMS uploads images
 ```
 
-### 1.4 Extract content into Markdown
+### 1.4 Create the home data file **FIRST** (this is critical)
 
-Your `index.astro` currently has hard-coded content. Extract it into Markdown files:
+**Most important rule:** Create the JSON file BEFORE configuring `.pages.yml`.
 
-**`src/content/pages/home.md`**
+PagesCMS generates the editing UI based on what it finds in the data file. If the file doesn't exist, the CMS won't know what to edit.
 
-```markdown
----
-title: "Mobila Orhei — Mobilă de Calitate"
-description: "Mobilă premium din Moldova. Paturi, bucătării, mese — livrare și instalare incluse."
+**`src/data/home.json`** — This is your "database" (purely data, no code):
 
-# Hero section
-hero_heading: "Mobilă Premium din Moldova"
-hero_subheading: "Paturi confortabile, bucătării moderne, și mobilă de design — directamente din fabrica noastră."
-hero_cta_label: "Exploreaza Colectia"
-hero_cta_url: "#furniture"
-
-# Services section
-services_heading: "De ce să alegi Mobila Orhei?"
-services_description: "Facem mobilă care durează."
-
-# Kitchens section
-kitchens_heading: "Bucătării Moderne"
-kitchens_description: "Proiecte personalizate pentru spațiul tău."
-
-# Furniture section
-furniture_heading: "Colecția de Mobilă"
-furniture_description: "Din paturi confortabile la mese de design."
-
-# Footer
-footer_text: "© 2026 Mobila Orhei. Livrare în toată Moldova."
----
+```json
+{
+  "title": "Mobila Orhei — Mobilă de Calitate",
+  "description": "Mobilă premium din Moldova. Paturi, bucătării, mese — livrare și instalare incluse.",
+  "hero_heading": "Mobilă Premium din Moldova",
+  "hero_subheading": "Paturi confortabile, bucătării moderne, și mobilă de design — directamente din fabrica noastră.",
+  "hero_cta_label": "Exploreaza Colectia",
+  "hero_cta_url": "#furniture",
+  "services_heading": "De ce să alegi Mobila Orhei?",
+  "services_description": "Facem mobilă care durează.",
+  "kitchens_heading": "Bucătării Moderne",
+  "kitchens_description": "Proiecte personalizate pentru spațiul tău.",
+  "furniture_heading": "Colecția de Mobilă",
+  "furniture_description": "Din paturi confortabile la mese de design.",
+  "footer_text": "© 2026 Mobila Orhei. Livrare în toată Moldova."
+}
 ```
 
-> Every field in the frontmatter becomes editable in the PagesCMS UI — perfect for updating prices, descriptions, or CTAs without a developer.
+> Every field becomes editable in the PagesCMS UI — perfect for updating prices, descriptions, or CTAs without a developer.
 
-### 1.5 Define a Content Collection
-
-**`src/content/config.ts`** — new file:
-
-```typescript
-import { defineCollection, z } from "astro:content";
-
-const pages = defineCollection({
-  type: "content",
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    hero_heading: z.string(),
-    hero_subheading: z.string(),
-    hero_cta_label: z.string(),
-    hero_cta_url: z.string(),
-    services_heading: z.string(),
-    services_description: z.string(),
-    kitchens_heading: z.string(),
-    kitchens_description: z.string(),
-    furniture_heading: z.string(),
-    furniture_description: z.string(),
-    footer_text: z.string(),
-  }),
-});
-
-export const collections = { pages };
-```
-
-### 1.6 Update `index.astro` to read from content
+### 1.5 Update `index.astro` to read from JSON
 
 ```astro
 ---
-import { getEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Mascot from '../components/Mascot.astro';
@@ -207,8 +287,9 @@ import Kitchens from '../components/Kitchens.astro';
 import Furniture from '../components/Furniture.astro';
 import Footer from '../components/Footer.astro';
 
-// Get the home page content from Markdown
-const home = await getEntry('pages', 'home');
+// Import data from JSON file
+import home from '../data/home.json';
+
 const {
   title,
   hero_heading,
@@ -222,14 +303,14 @@ const {
   furniture_heading,
   furniture_description,
   footer_text,
-} = home.data;
+} = home;
 ---
 
 <Layout title={title}>
   <Header />
   <Mascot />
   <div id="sections" class="font-arial bg-pale-light-gray mt-12.5 flex-1 flex flex-col">
-    {/* Hero: Pass content from Markdown */}
+    {/* Hero: Pass content from JSON */}
     <Hero
       heading={hero_heading}
       subheading={hero_subheading}
@@ -286,6 +367,35 @@ const { heading, subheading, ctaLabel, ctaUrl } = Astro.props;
 </section>
 ```
 
+### 1.6 Update components to accept props
+
+Your components need to accept data as props. Example — `src/components/Hero.astro`:
+
+```astro
+---
+interface Props {
+  heading: string;
+  subheading: string;
+  ctaLabel: string;
+  ctaUrl: string;
+}
+
+const { heading, subheading, ctaLabel, ctaUrl } = Astro.props;
+---
+
+<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700">
+  <div class="text-center text-white px-6">
+    <h1 class="text-5xl font-bold mb-4">{heading}</h1>
+    <p class="text-xl mb-8 text-slate-300">{subheading}</p>
+    <a href={ctaUrl} class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg transition">
+      {ctaLabel}
+    </a>
+  </div>
+</section>
+```
+
+Do the same for `Services.astro`, `Kitchens.astro`, `Furniture.astro`, and `Footer.astro`.
+
 ### 1.7 Test the build locally
 
 ```bash
@@ -296,7 +406,7 @@ Verify:
 
 - Site loads at `http://localhost:3000`
 - All content displays (hero, services, kitchens, furniture)
-- Content matches what's in `home.md`
+- Content matches what's in `home.json`
 
 Then test production build:
 
@@ -308,8 +418,8 @@ npm run preview
 ### 1.8 Commit this phase
 
 ```bash
-git add src/content/ src/components/ src/pages/
-git commit -m "feat: extract hard-coded content to Markdown for CMS integration"
+git add src/data/ src/components/ src/pages/
+git commit -m "feat: extract hard-coded content to JSON for CMS integration"
 git push
 ```
 
@@ -317,47 +427,101 @@ git push
 
 ## Phase 2 — Configure PagesCMS
 
-PagesCMS is configured entirely through **`public/admin/config.yml`** (one file, no database).
+PagesCMS is configured entirely through **`.pages.yml`** at the repo root (one file, no database).
 
-### 2.1 Create the config file
+### 2.1 Understand the `.pages.yml` Structure
 
-```bash
-mkdir -p public/admin
-touch public/admin/config.yml
-```
+Your `.pages.yml` is **already created**. Now we need to update it to match your actual data files.
 
-### 2.2 Write the configuration
+The file has three critical sections:
 
-**`public/admin/config.yml`** — This config matches your site structure:
+**Section A: Media Settings**
 
 ```yaml
-# ─────────────────────────────────────────────────────────
-# PagesCMS Configuration for Mobila Orhei
-# Docs: https://pagescms.org/docs/configuration
-# ─────────────────────────────────────────────────────────
+media: astro-project/public/images/uploads
+```
 
-media:
-  input: astro-project/public/images/uploads
-  output: /images/uploads
+This tells PagesCMS where to save uploaded images.
+
+**Section B: Content Collections** (the files PagesCMS can edit)
+
+```yaml
+content:
+  - name: home
+    label: Pagina Principală
+    path: astro-project/src/data
+    filename: home.json
+    type: file
+```
+
+**Section C: Fields** (the editing form in the browser)
+
+```yaml
+fields:
+  - { name: hero_heading, label: "Hero - Titlu", type: string }
+  - { name: hero_image, label: "Hero Image", type: image }
+```
+
+### 2.2 Critical Rule: Field Names Must Match Exactly
+
+**The field `name` in `.pages.yml` must match the JSON key exactly:**
+
+✅ **Correct:**
+
+```json
+{ "hero_heading": "Mobilă Premium" }
+```
+
+```yaml
+- { name: hero_heading, label: "Hero - Titlu", type: string }
+```
+
+❌ **Wrong:**
+
+```json
+{ "heading": "Mobilă Premium" }
+```
+
+```yaml
+- { name: hero_heading, label: "Hero - Titlu", type: string } # name doesn't match!
+```
+
+PagesCMS checks the JSON file against your `.pages.yml`. If names don't match, it won't recognize the fields.
+
+### 2.3 How Image Fields Work
+
+When you add a `type: image` field:
+
+1. **You upload in PagesCMS** → Browser opens file picker
+2. **PagesCMS saves the file** → Goes to `astro-project/public/images/uploads/my-photo.jpg`
+3. **PagesCMS updates JSON** → `"hero_image": "/images/uploads/my-photo.jpg"`
+4. **Your Astro component displays it** → `<img src={home.hero_image} />`
+
+### 2.4 Complete `.pages.yml` Example
+
+Here's the full config for your project:
+
+```yaml
+# .pages.yml — PagesCMS Configuration for Mobila Orhei
+# Documentation: https://pagescms.org/docs/configuration
+
+media: astro-project/public/images/uploads
 
 content:
-  # ── Homepage ──────────────────────────────────────────
+  # ── Homepage (Single File) ────────────────────────
   - name: home
-    label: Pagina Principală # label in CMS (Romanian: "Main Page")
-    path: astro-project/src/content/pages
-    filename: home.md
-    type: file # single file, not a collection
+    label: Pagina Principală
+    path: astro-project/src/data
+    filename: home.json
+    type: file
     fields:
       - { name: title, label: "Titlu Site", type: string }
       - { name: description, label: "Meta Description (SEO)", type: string }
 
       # Hero Section
-      - {
-          name: hero_heading,
-          label: "Hero - Direcție Principală",
-          type: string,
-        }
+      - { name: hero_heading, label: "Hero - Titlu Principal", type: string }
       - { name: hero_subheading, label: "Hero - Subtitlu", type: string }
+      - { name: hero_image, label: "Hero - Imagine de Fundal", type: image }
       - { name: hero_cta_label, label: "Hero - Buton CTA", type: string }
       - { name: hero_cta_url, label: "Hero - Link Buton", type: string }
 
@@ -388,37 +552,61 @@ content:
       # Footer
       - { name: footer_text, label: "Footer - Text", type: string }
 
-  # ── Products (optional: for kitchen designs) ──────────
+  # ── Kitchen Projects (Collection of many files) ─────
   - name: kitchens
-    label: Proiecte Bucătării # Kitchen projects
-    path: astro-project/src/content/products
-    filename: "{fields.slug}.md"
-    view:
-      fields: [title, image]
+    label: Proiecte Bucătării
+    path: astro-project/src/data/products
+    filename: "{fields.slug}.json"
+    type: collection
     fields:
       - { name: title, label: "Nume Proiect", type: string }
-      - { name: slug, label: "Slug (ID)", type: string }
+      - { name: slug, label: "URL Slug", type: string }
       - { name: image, label: "Imagine Proiect", type: image }
-      - { name: description, label: "Descriere", type: rich-text }
       - { name: price, label: "Preț (MDL)", type: string }
-      - { name: features, label: "Caracteristici", type: rich-text }
+      - { name: description, label: "Descriere", type: rich-text }
 
-  # ── Services (optional: delivery, warranty, custom work) ──
-  - name: services
+  # ── Services (Collection) ──────────────────────────
+  - name: services_items
     label: Servicii
-    path: astro-project/src/content/services
-    filename: "{fields.slug}.md"
-    view:
-      fields: [title, icon]
+    path: astro-project/src/data/services
+    filename: "{fields.slug}.json"
+    type: collection
     fields:
       - { name: title, label: "Nume Serviciu", type: string }
       - { name: slug, label: "Slug", type: string }
-      - { name: icon, label: "Icon (emoji/image)", type: string }
+      - { name: icon, label: "Icon (emoji)", type: string }
       - { name: description, label: "Descriere", type: rich-text }
-      - { name: price_info, label: "Info preț/condiții", type: string }
 ```
 
-> **PagesCMS Field Types:**  
+### 2.5 Important: Collection vs File
+
+- **`type: file`** — Single file (e.g., `home.json`). Best for homepage settings.
+- **`type: collection`** — Multiple files (e.g., many kitchen projects). PagesCMS auto-creates new files using the `filename` pattern.
+
+Example: If `filename: "{fields.slug}.json"` and you create a kitchen called "kitchen-modern", PagesCMS creates `kitchen-modern.json` in that folder.
+
+### 2.6 Commit the configuration
+
+```bash
+git add .pages.yml src/data/
+git commit -m "feat: configure PagesCMS with media, collections, and fields"
+git push
+```
+
+filename: "{fields.slug}.md"
+view:
+fields: [title, icon]
+fields:
+
+- { name: title, label: "Nume Serviciu", type: string }
+- { name: slug, label: "Slug", type: string }
+- { name: icon, label: "Icon (emoji/image)", type: string }
+- { name: description, label: "Descriere", type: rich-text }
+- { name: price_info, label: "Info preț/condiții", type: string }
+
+````
+
+> **PagesCMS Field Types:**
 > `string` (short text) · `text` (long text) · `rich-text` (HTML editor) · `image` · `date` · `boolean` · `number` · `select` · `list` · `object`
 
 ### 2.3 Commit the CMS config
@@ -427,13 +615,13 @@ content:
 git add public/admin/config.yml
 git commit -m "feat: add PagesCMS configuration for all content sections"
 git push
-```
+````
 
 ---
 
 ## Phase 3 — Make Content CMS-Editable
 
-Expand the Markdown structure to cover **all** parts of your landing page that should be editable:
+Expand the JSON structure to cover **all** parts of your landing page that should be editable:
 
 ### Checklist — What to make editable:
 
@@ -447,62 +635,87 @@ Expand the Markdown structure to cover **all** parts of your landing page that s
 - [ ] Social media links
 - [ ] Images (hero background, kitchen photos, testimonials)
 
-### Example: Add services list to home.md
+### Example: Add services list to home.json
 
-**`src/content/pages/home.md` — Add to frontmatter:**
+**`src/data/home.json` — Add to the JSON:**
 
-```markdown
-services:
-
-- label: "Livrare Gratuită"
-  icon: "🚚"
-  description: "Livrare în toată Moldova pentru comenzi peste 500 MDL"
-- label: "Instalare Inclusă"
-  icon: "🔨"
-  description: "Oamenii noștri vor instala și aranja totul perfect"
-- label: "Garantie 2 Ani"
-  icon: "✅"
-  description: "Orice defect de fabricație — înlocuim gratuit"
-- label: "Mobilă Personalizată"
-  icon: "🎨"
-  description: "Dimensiuni și culori după preferințele tale"
+```json
+{
+  "title": "Mobila Orhei",
+  "services": [
+    {
+      "label": "Livrare Gratuită",
+      "icon": "🚚",
+      "description": "Livrare în toată Moldova pentru comenzi peste 500 MDL"
+    },
+    {
+      "label": "Instalare Inclusă",
+      "icon": "🔨",
+      "description": "Oamenii noștri vor instala și aranja totul perfect"
+    },
+    {
+      "label": "Garantie 2 Ani",
+      "icon": "✅",
+      "description": "Orice defect de fabricație — înlocuim gratuit"
+    },
+    {
+      "label": "Mobilă Personalizată",
+      "icon": "🎨",
+      "description": "Dimensiuni și culori după preferințele tale"
+    }
+  ]
+}
 ```
 
-**Update `config.yml`** to include services list:
+**Update `.pages.yml`** to include services array:
 
 ```yaml
-- name: services
-  label: Servicii (listă pe pagina principală)
-  type: list
+- name: home
+  label: Pagina Principală
+  path: astro-project/src/data
+  filename: home.json
+  type: file
   fields:
-    - { name: label, label: "Titlu Serviciu", type: string }
-    - { name: icon, label: "Icon (emoji)", type: string }
-    - { name: description, label: "Descriere", type: text }
+    - { name: title, label: "Titlu Site", type: string }
+    - name: services
+      label: Servicii (listă)
+      type: list
+      fields:
+        - { name: label, label: "Titlu Serviciu", type: string }
+        - { name: icon, label: "Icon (emoji)", type: string }
+        - { name: description, label: "Descriere", type: text }
 ```
 
 **Update `src/components/Services.astro`:**
 
 ```astro
 ---
+interface Service {
+  label: string;
+  icon: string;
+  description: string;
+}
+
 interface Props {
-  services: Array<{ label: string; icon: string; description: string }>;
+  services?: Service[];
   heading: string;
   description: string;
 }
 
-const { services, heading, description } = Astro.props;
+const { services = [], heading, description } = Astro.props;
 ---
 
 <section class="py-12 px-6">
   <h2 class="text-3xl font-bold mb-4">{heading}</h2>
   <p class="mb-8 text-slate-600">{description}</p>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {services.map(service => (
-      <div class="border rounded-lg p-8">
-        <div class="text-4xl mb-4">{service.icon}</div>
-        <h3 class="text-xl font-bold mb-2">{service.label}</h3>
-        <p>{service.description}</p>
+  {services.length > 0 && (
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {services.map(service => (
+        <div class="border rounded-lg p-8">
+          <div class="text-4xl mb-4">{service.icon}</div>
+          <h3 class="text-xl font-bold mb-2">{service.label}</h3>
+          <p>{service.description}</p>
       </div>
     ))}
   </div>
@@ -650,7 +863,7 @@ PagesCMS auto-detects `public/admin/config.yml` and loads your content structure
 1. Open a kitchen project (or add one) in PagesCMS
 2. Click the image field
 3. Upload a furniture photo
-4. Save — image is stored in `public/images/uploads/` and path is written to the Markdown file
+4. Save — image is stored in `astro-project/public/images/uploads/` and path is written to the JSON file
 
 ---
 
@@ -662,7 +875,7 @@ PagesCMS auto-detects `public/admin/config.yml` and loads your content structure
 
 - [ ] `npm run build` exits with no errors
 - [ ] `npm run preview` shows the site locally
-- [ ] No hard-coded strings remain in `.astro` files (all in Markdown)
+- [ ] No hard-coded strings remain in `.astro` files (all in JSON)
 - [ ] Tailwind CSS classes render correctly
 
 **PagesCMS**
@@ -697,8 +910,8 @@ Author: You <you@email.com>
 
     feat: expand CMS coverage to services, products, and all editable sections
     feat: add PagesCMS configuration for all content sections
-    feat: extract hard-coded content to Markdown for CMS integration
-    chore: create content directory structure
+    feat: extract hard-coded content to JSON for CMS integration
+    chore: create data directory structure
     ...
 ```
 
@@ -714,10 +927,67 @@ git commit --allow-empty -m "style: improve mobile responsiveness with Tailwind"
 
 ## Troubleshooting
 
+### Setup Order Issues (Most Common Problems)
+
+**Problem: PagesCMS sidebar is empty or shows no content**
+
+Cause: You configured `.pages.yml` before creating the data files.
+
+Solution: Follow the correct order:
+
+1. Create `src/data/home.json` (the actual file)
+2. Update `.pages.yml` to point to it
+3. Push to GitHub
+4. Refresh PagesCMS dashboard
+
+PagesCMS reads the JSON files first, then builds the UI from `.pages.yml`. If the file doesn't exist, the UI won't appear.
+
+**Problem: PagesCMS field values aren't showing**
+
+Cause: Field names in `.pages.yml` don't match keys in JSON.
+
+Example (wrong):
+
+```json
+{ "heading": "Hello" }  ← JSON key is "heading"
+```
+
+```yaml
+- { name: hero_heading, label: "Titlu", type: string }  ← YAML field is "hero_heading"
+```
+
+Solution: Make sure they match exactly:
+
+```json
+{ "hero_heading": "Hello" }
+```
+
+```yaml
+- { name: hero_heading, label: "Titlu", type: string }
+```
+
+**Problem: Components display "undefined" values**
+
+Cause: You imported JSON but didn't pass data to components.
+
+Wrong:
+
+```astro
+import home from '../data/home.json';
+<Hero />  ← no props passed!
+```
+
+Right:
+
+```astro
+import home from '../data/home.json';
+<Hero heading={home.hero_heading} subheading={home.hero_subheading} />
+```
+
 ### PagesCMS shows "No configuration file found"
 
-- Confirm file exists at exactly `public/admin/config.yml`
-- The `public/` folder in Astro maps to `/` on the deployed site
+- Expected: `.pages.yml` at repo root (not in a subfolder)
+- The file should be pushed to GitHub
 - Hard-refresh PagesCMS or clear browser cache
 
 ### Build fails after CMS changes
@@ -726,18 +996,20 @@ git commit --allow-empty -m "style: improve mobile responsiveness with Tailwind"
 - Check the build log in **GitHub Actions** for errors
 - Run `npm run build` locally to debug
 
-### Content Collections sync errors
+### JSON syntax errors
 
-```bash
-# Regenerate Astro types
-npx astro sync
-```
+If your site fails to build after CMS edits:
+
+- Check that `.json` files are valid JSON (use a JSON validator)
+- Ensure all field names in JSON match the field names in `.pages.yml`
+- Check GitHub Actions build log for specific JSON parse errors
+- Make sure image paths start with `/` (e.g., `/images/uploads/photo.jpg`)
 
 ### Images not appearing after upload
 
-- Verify `media.input: astro-project/public/images/uploads` in `config.yml` matches your folder structure
-- Verify `media.output: /images/uploads` starts with `/`
-- Commit the image files to GitHub and rebuild
+- Verify `media:` in `.pages.yml` points to `astro-project/public/images/uploads`
+- Confirm images are saved in the correct folder
+- In Astro, use paths like `<img src={home.hero_image} />` (no `/public/` prefix)
 
 ### CMS saves but site doesn't rebuild
 

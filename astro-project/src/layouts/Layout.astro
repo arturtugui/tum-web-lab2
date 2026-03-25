@@ -2,7 +2,7 @@
 // src/layouts/Layout.astro
 import "../styles/global.css";
 
-const { title = "Magazin de mobila Moldova" } = Astro.props;
+import config from "../data/config.json";
 ---
 
 <!doctype html>
@@ -10,7 +10,7 @@ const { title = "Magazin de mobila Moldova" } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <title>{config.title}</title>
     <!-- FontAwesome icons -->
     <script
       src="https://kit.fontawesome.com/b9b42215a0.js"
