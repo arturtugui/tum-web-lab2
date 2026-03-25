@@ -40,37 +40,9 @@ content:
         type: string
       - name: items
         label: Lista Servicii
-        type: array
-        view:
-          fields: [title, description, icon]
+        type: object
         fields:
           - { name: title, label: "Titlu Serviciu", type: string }
           - { name: slug, label: "Slug (ID)", type: string }
           - { name: icon, label: "Icon (fa-class)", type: string }
           - { name: description, label: "Descriere", type: text }
-
-  # ── Kitchen Projects (optional) ───────────────────
-  - name: kitchens
-    label: Proiecte Bucătării
-    path: astro-project/src/content/products
-    filename: "{fields.slug}.md"
-    type: collection
-    fields:
-      - name: title
-        label: Nume Proiect
-        type: string
-      - name: slug
-        label: Slug (ID)
-        type: string
-      - name: image
-        label: Imagine Proiect
-        type: image
-      - name: description
-        label: Descriere
-        type: rich-text
-      - name: price
-        label: Preț (MDL)
-        type: string
-      - name: features
-        label: Caracteristici
-        type: rich-text
