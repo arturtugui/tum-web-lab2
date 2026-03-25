@@ -12,6 +12,12 @@ content:
       - name: title
         label: Titlu Tab Browser
         type: string
+      - name: description
+        label: Descriere (pentru meta tags)
+        type: string
+      - name: keywords
+        label: Cuvinte-cheie (descriptoare SEO)
+        type: string
 
   # ── Kitchen Projects (optional) ───────────────────
   - name: kitchens
@@ -38,26 +44,3 @@ content:
       - name: features
         label: Caracteristici
         type: rich-text
-
-  # ── Services (optional) ───────────────────────────
-  - name: services_items
-    label: Servicii
-    path: astro-project/src/content/services
-    filename: "{fields.slug}.md"
-    type: collection
-    fields:
-      - name: title
-        label: Nume Serviciu
-        type: string
-      - name: slug
-        label: Slug
-        type: string
-      - name: icon
-        label: Icon (emoji/image)
-        type: string
-      - name: description
-        label: Descriere
-        type: rich-text
-      - name: price_info
-        label: Info preț/condiții
-        type: string

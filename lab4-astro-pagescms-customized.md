@@ -2,101 +2,147 @@
 
 ## Migrating Mobila Orhei to Astro + PagesCMS
 
-> **Stack:** Astro (SSG) + PagesCMS (Git-based CMS) + Tailwind CSS v4  
+> **Stack:** Astro 6 (SSG) + PagesCMS (Git-based CMS) + Tailwind CSS v4  
 > **Business:** Mobila Orhei — Premium Furniture & Kitchen Store  
-> **Deployment:** GitHub Pages → [mobila-orhei.tech](https://www.mobila-orhei.tech)
+> **Deployment:** GitHub Pages → [mobila-orhei.tech](https://www.mobila-orhei.tech)  
+> **Architecture:** Markdown + Content Collections + Zod Schema
 
 ---
 
-## Table of Contents
+## Quick Reference Checklist
 
-1. [Overview](#overview)
-2. [Prerequisites](#prerequisites)
-3. [Phase 1 — Prepare Your Astro Project](#phase-1--prepare-your-astro-project)
-4. [Phase 2 — Configure PagesCMS](#phase-2--configure-pagescms)
-5. [Phase 3 — Make Content CMS-Editable](#phase-3--make-content-cms-editable)
-6. [Phase 4 — Deploy to GitHub Pages](#phase-4--deploy-to-github-pages)
-7. [Phase 5 — Connect PagesCMS to Your Repo](#phase-5--connect-pagescms-to-your-repo)
-8. [Phase 6 — Verify & Test](#phase-6--verify--test)
-9. [Git History Checklist](#git-history-checklist)
-10. [Troubleshooting](#troubleshooting)
+Use this to verify you've completed all setup steps. Check off as you go:
+
+### Phase 1: Content Collections Setup
+
+- [ ] `src/content.config.ts` created with glob loader
+- [ ] Schema defined with Zod (title, description, keywords fields)
+- [ ] `src/content/config/config.md` created with YAML frontmatter
+- [ ] All metadata fields filled in `config.md`
+
+### Phase 2: Layout Integration
+
+- [ ] `Layout.astro` imports `getEntry` from `"astro:content"`
+- [ ] `Layout.astro` fetches config with `getEntry("config", "config")`
+- [ ] Error handling with guard clause if `!configEntry`
+- [ ] Fields destructured: `const { title, description, keywords } = configEntry.data`
+- [ ] Meta tags in `<head>`: description and keywords
+- [ ] Title tag contains dynamic value from config
+
+### Phase 3: PagesCMS Integration
+
+- [ ] `.pages.yml` exists at repo root
+- [ ] Media path set: `media: astro-project/public/images`
+- [ ] Config entry has `type: file` with **full file path**: `astro-project/src/content/config/config.md`
+- [ ] Each field in `.pages.yml` matches YAML frontmatter keys exactly
+- [ ] Manual test: open `.pages.yml` config in PagesCMS editor
+
+### Phase 4: Deployment
+
+- [ ] `.github/workflows/deploy.yml` configured for `lab-4-pages-cms` branch
+- [ ] GitHub Pages pointing to correct branch
+- [ ] Custom domain (mobila-orhei.tech) configured in CNAME
+- [ ] `npm run build` exits with code 0
+- [ ] `npm run dev` shows site at localhost:3000
+
+### Phase 5: Git & Verification
+
+- [ ] All changes committed to `lab-4-pages-cms` branch
+- [ ] PagesCMS edits trigger auto-commits to GitHub
+- [ ] GitHub Pages rebuilds automatically after commits
+- [ ] Live site reflects CMS changes within 1-2 minutes
 
 ---
 
-## Overview
+## How It Works: PagesCMS + Astro Architecture
 
-### What is PagesCMS?
-
-PagesCMS is a **free, open-source, Git-based CMS** that lets your team (or clients) edit product descriptions, pricing, services, and testimonials without touching code. All content lives in JSON files in your GitHub repo. No database. No monthly fees. When someone edits a product in PagesCMS, it commits directly to GitHub, and your Astro site rebuilds automatically.
-
-### How the pieces fit together (for a furniture store)
+### The Complete Flow
 
 ```
-Marketing team updates product
-or service description
+PagesCMS UI (app.pagescms.org)
+        │
+        ▼ edit config.md YAML frontmatter
+GitHub Repository (lab-4-pages-cms branch)
+        │
+        ▼ GitHub Actions detects commit
+astro build runs, reads config.md
+        │
+        ▼ Content Collections glob loader finds *.md files
+Zod schema validates YAML frontmatter
+        │
+        ▼ getEntry("config", "config") fetches data
+Layout.astro renders with dynamic title, description, keywords
         │
         ▼
-  PagesCMS UI (app.pagescms.org)
-        │  commits updated product details to GitHub
-        ▼
-  GitHub Repository
-        │  triggers GitHub Actions
-        ▼
-  GitHub Pages (runs `astro build`)
-        │
-        ▼
-  mobila-orhei.tech displays new content ✓
+GitHub Pages deploys to mobila-orhei.tech
 ```
 
-**Benefit:** Your team doesn't wait for a developer to update pricing, add new furniture collections, or edit the kitchens page.
+### Why Markdown + Content Collections?
 
----
+Unlike JSON files, **Markdown with YAML frontmatter:**
 
-## How It Works: The PagesCMS + Astro Bridge
+✅ Type-safe (Zod validates schema)  
+✅ PagesCMS native format (works out of the box)  
+✅ Cleaner to edit in CMS UI (table-based forms)  
+✅ Supports rich content (markdown body)  
+✅ Single source of truth (one `.md` file per collection)
 
-### Approach: JSON Files (Simple & Recommended for You)
+### Key Architecture Decisions
 
-The guide uses **JSON files with direct import** — the simplest way to connect PagesCMS to Astro.
-
-> **Note:** Gemini recommended Astro **Content Collections** with TypeScript schemas (Zod). That's also valid but requires more setup code. We chose the simpler JSON approach your colleague used with Eleventy.
-
-**Why JSON files are simpler:**
-
-- No `src/content/config.ts` schema file needed
-- No `defineCollection()` or Zod validation
-- Just import and use: `import home from '../data/home.json'`
-- PagesCMS doesn't care how you use the data — it just edits the JSON file
-
-**Trade-off:**
-
-- Content Collections (Gemini's approach) = Type-safe, catches errors before build
-- JSON files (your approach) = Simple, flexible, faster to set up
-
-Both work. We're using JSON files because they're closer to what your colleague did and require less boilerplate.
+| Component           | Technology                       | Why                                        |
+| ------------------- | -------------------------------- | ------------------------------------------ |
+| **Content Storage** | Markdown files in `src/content/` | PagesCMS friendly, Git-native              |
+| **Schema**          | Zod in `src/content.config.ts`   | TypeScript type safety                     |
+| **Data Fetching**   | `getEntry()` in Layout.astro     | Server-side rendering, no hydration needed |
+| **CMS Config**      | `.pages.yml` at repo root        | Tells PagesCMS where to find & edit files  |
+| **Deployment**      | GitHub Pages + Actions           | Free, auto-deploys on Git commit           |
 
 ### The Three Core Concepts
 
-**1. Metadata (`.pages.yml`)**
-This YAML file in your repo root tells PagesCMS:
+**1. Content Collections with Glob Loader (`src/content.config.ts`)**
 
-- Where your data files live (`src/data/home.json`)
-- What fields are editable (`hero_heading`, `services`, etc.)
-- Where media uploads go (`public/images/uploads/`)
+Astro automatically discovers `.md` files matching the glob pattern and validates them against a Zod schema:
 
-PagesCMS reads `.pages.yml` once and uses it to build the editing UI.
-
-**2. Data Files (JSON)**
-These are plain JSON files in `src/data/` that store all your content:
-
-```json
-{
-  "title": "Mobila Orhei",
-  "hero_heading": "Mobilă Premium",
-  "services": [...]
-}
+```typescript
+const config = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/config" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    keywords: z.string(),
+  }),
+});
 ```
 
-PagesCMS **edits these files directly** and commits to GitHub. No database. No API.
+**2. Markdown Content (`src/content/config/config.md`)**
+
+All metadata lives in one `.md` file with YAML frontmatter. PagesCMS edits this directly:
+
+```markdown
+---
+title: Magazin de mobila Moldova
+description: Magazin de mobilă și bucătării în Orhei, Moldova...
+keywords: mobilă orhei, bucătării moldova, mobilier...
+---
+```
+
+**3. PagesCMS Configuration (`.pages.yml`)**
+
+Tells PagesCMS where to find files and what fields are editable:
+
+```yaml
+content:
+  - name: config
+    label: Setari generale
+    path: astro-project/src/content/config/config.md # ← FULL file path!
+    type: file
+    fields:
+      - name: title
+        label: Titlu Tab Browser
+        type: string
+```
+
+⚠️ **Critical Rule:** Field names in `.pages.yml` MUST match YAML frontmatter keys exactly (`title` → `title`, `description` → `description`, etc.).
 
 **3. Astro Components**
 Your `.astro` components **import the JSON** and display it:

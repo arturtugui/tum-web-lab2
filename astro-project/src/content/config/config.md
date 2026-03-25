@@ -1,3 +1,5 @@
 ---
-title: Test
+title: Magazin de mobila Moldova
+description: Magazin de mobilă și bucătării în Orhei, Moldova. Ofertă largă de mobilier de calitate cu livrare și montaj.
+keywords: mobilă orhei, mobila orhei mobilier orhei, bucătării orhei, bucatarii orhei, mobilă moldova, mobilier moldova, bucătării moldova, mobilier de calitate, mobilă pentru casă
 ---

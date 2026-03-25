@@ -6,6 +6,8 @@ const config = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/config' }),
   schema: z.object({
     title: z.string(),
+    description: z.string(),
+    keywords: z.string(),
   }),
 });
 
