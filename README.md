@@ -98,4 +98,4 @@ astro-project/src/
 ## Project Links
 
 - GitHub Pages: https://arturtugui.github.io/tum-web-lab2/
-- Live Site (GitHub Pages): https://www.mobila-orhei.tech/
+- Live Website: https://www.mobila-orhei.tech/
